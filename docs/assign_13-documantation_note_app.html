@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Assignment 13 — Notes App Documentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --blue: #2563eb;
+        --green: #059669;
+        --gold: #d97706;
+        --ink: #0f172a;
+        --muted: #64748b;
+        --paper: #f8fafc;
+        --card: #ffffff;
+        --line: #e2e8f0;
+        --soft: #f1f5f9;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        font-family: Outfit, sans-serif;
+        line-height: 1.7;
+        overflow-x: hidden;
+      }
+
+      .doc-header,
+      .doc-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        padding: 14px 36px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        color: var(--muted);
+      }
+
+      .doc-header {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        border-top: 4px solid var(--blue);
+      }
+
+      .doc-header strong,
+      .doc-footer strong {
+        color: var(--ink);
+      }
+
+      .doc-footer {
+        border-bottom: 0;
+        border-top: 1px solid var(--line);
+        margin-top: 8px;
+      }
+
+      .shell {
+        display: grid;
+        grid-template-columns: 280px minmax(0, 1fr);
+        max-width: 1500px;
+        margin: 0 auto;
+        min-height: calc(100vh - 108px);
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 53px;
+        height: calc(100vh - 53px);
+        overflow: auto;
+        padding: 28px 20px 32px;
+        background: #fff;
+        border-right: 1px solid var(--line);
+      }
+
+      .side-kicker {
+        margin: 0 0 14px;
+        color: var(--muted);
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      .sidebar nav {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .sidebar nav a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 12px;
+        border-radius: 12px;
+        color: #334155;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+
+      .sidebar nav a em {
+        width: 28px;
+        color: var(--muted);
+        font-style: normal;
+        font-size: 0.78rem;
+      }
+
+      .sidebar nav a:hover,
+      .sidebar nav a.active {
+        background: #eff6ff;
+        color: var(--blue);
+      }
+
+      .sidebar nav a.active em {
+        color: var(--blue);
+      }
+
+      .side-repo {
+        display: block;
+        margin-top: 22px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+        color: var(--blue);
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+        word-break: break-word;
+      }
+
+      .content {
+        padding: 36px 40px 72px;
+      }
+
+      .print-only {
+        display: none;
+      }
+
+      .cover {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 36px 40px 32px;
+        margin-bottom: 28px;
+      }
+
+      .title-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .title-bar .intro {
+        min-width: 0;
+      }
+
+      .title-bar .kicker {
+        margin-bottom: 8px;
+      }
+
+      .title-bar h1 {
+        margin: 0;
+        font-size: clamp(2.4rem, 5vw, 3.4rem);
+        letter-spacing: -0.03em;
+      }
+
+      .title-bar .logo {
+        flex: 0 0 auto;
+        margin-left: auto;
+      }
+
+      .title-bar .logo img {
+        width: 96px;
+        height: auto;
+        display: block;
+        background: transparent;
+      }
+
+      .kicker {
+        color: var(--blue);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-size: 0.78rem;
+        font-weight: 700;
+        margin: 0 0 8px;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Source Serif 4", Georgia, serif;
+        line-height: 1.2;
+        margin: 0 0 10px;
+      }
+
+      h1 {
+        font-size: clamp(2.1rem, 5vw, 3.4rem);
+        color: #16345a;
+      }
+
+      h2 {
+        font-size: 1.55rem;
+        color: #16345a;
+      }
+
+      h3 {
+        font-size: 1.12rem;
+        color: var(--blue);
+      }
+
+      .lede {
+        max-width: 70ch;
+        color: var(--muted);
+        font-size: 1.15rem;
+        margin: 0 0 22px;
+      }
+
+      .facts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 0 0 22px;
+      }
+
+      .fact {
+        background: var(--soft);
+        border-radius: 999px;
+        padding: 8px 14px;
+        font-size: 0.92rem;
+      }
+
+      .fact b {
+        color: var(--blue);
+        margin-right: 6px;
+        font-size: 0.72rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .repo-banner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px 24px;
+        margin: 0;
+        padding: 16px 22px;
+        background: #eef4ff;
+        border-radius: 999px;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .repo-banner:hover {
+        background: #e0ebff;
+      }
+
+      .repo-banner b {
+        color: #1e3a8a;
+        font-size: 0.95rem;
+        letter-spacing: 0.01em;
+        white-space: nowrap;
+      }
+
+      .repo-banner span {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--blue);
+        word-break: break-all;
+      }
+
+      .toc-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin: 20px 0 0;
+      }
+
+      .toc-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 20px 20px 18px;
+        background: var(--soft);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+      }
+
+      .toc-card:hover,
+      .toc-card.active {
+        transform: translateY(-2px);
+        border-color: #bfdbfe;
+        box-shadow: 0 10px 24px rgba(37, 99, 235, 0.08);
+        background: #fff;
+      }
+
+      .toc-card em {
+        flex: 0 0 auto;
+        width: 40px;
+        height: 40px;
+        display: grid;
+        place-items: center;
+        border-radius: 12px;
+        background: #dbeafe;
+        color: var(--blue);
+        font-style: normal;
+        font-weight: 700;
+      }
+
+      .toc-card b {
+        display: block;
+        font-family: "Source Serif 4", Georgia, serif;
+        font-size: 1.15rem;
+        margin-bottom: 4px;
+      }
+
+      .toc-card span {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .toc-card i {
+        margin-left: auto;
+        color: var(--blue);
+        font-style: normal;
+        font-weight: 700;
+        align-self: center;
+      }
+
+      .back-toc {
+        display: inline-flex;
+        float: right;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-decoration: none;
+        margin: 0 0 10px 12px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: var(--soft);
+        color: var(--blue);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        background: var(--blue);
+        color: #fff;
+        text-decoration: none;
+        border-radius: 999px;
+        padding: 11px 20px;
+        font-weight: 700;
+        border: 0;
+        font: inherit;
+        cursor: pointer;
+      }
+
+      .btn.green {
+        background: var(--green);
+      }
+
+      .btn.ghost {
+        background: #fff;
+        color: var(--blue);
+        border: 1px solid var(--line);
+      }
+
+      .back-toc {
+        display: none;
+      }
+
+      section {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 36px 36px 28px;
+        margin-bottom: 24px;
+      }
+
+      .num {
+        display: inline-flex;
+        width: 28px;
+        height: 28px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #dbe8f8;
+        color: var(--blue);
+        font-size: 0.85rem;
+        font-weight: 700;
+        margin-right: 8px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        gap: 16px;
+        margin: 20px 0 8px;
+      }
+
+      .card {
+        background: var(--soft);
+        border-radius: 14px;
+        padding: 18px 18px 10px;
+        border-top: 4px solid var(--blue);
+      }
+
+      .card.green {
+        border-top-color: var(--green);
+      }
+
+      .card.gold {
+        border-top-color: var(--gold);
+      }
+
+      .card strong {
+        display: block;
+        font-family: "Source Serif 4", Georgia, serif;
+        margin-bottom: 4px;
+      }
+
+      ol.steps > li,
+      ol.guide > li {
+        margin: 14px 0;
+      }
+
+      code {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.86em;
+        background: #eaf2fb;
+        color: #1a4d8c;
+        padding: 0.12em 0.4em;
+        border-radius: 6px;
+      }
+
+      pre {
+        overflow: auto;
+        background: #f3f7fd;
+        color: #1d2b3a;
+        border: 1px solid var(--line);
+        padding: 14px 16px;
+        border-radius: 12px;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.86rem;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 8px 0 18px;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 14px 12px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+      }
+
+      th {
+        color: var(--blue);
+        font-size: 0.78rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .flow {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+        margin: 12px 0 18px;
+      }
+
+      .flow span {
+        background: #eaf4ff;
+        color: #16345a;
+        border: 1px solid #c5daf3;
+        border-radius: 12px;
+        padding: 14px 10px;
+        text-align: center;
+        font-weight: 700;
+        font-size: 0.9rem;
+      }
+
+      .note {
+        background: #fff7e6;
+        border-left: 5px solid var(--gold);
+        border-radius: 0 12px 12px 0;
+        padding: 12px 14px;
+        margin: 8px 0 16px;
+      }
+
+      .shots {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 36px 22px;
+        margin: 28px 0 8px;
+        align-items: start;
+      }
+
+      .shot {
+        margin: 0;
+        background: none;
+        border: 0;
+      }
+
+      .phone {
+        background: #0f172a;
+        border-radius: 28px;
+        padding: 12px 9px 16px;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+      }
+
+      .phone-bar {
+        width: 68px;
+        height: 7px;
+        margin: 2px auto 10px;
+        border-radius: 999px;
+        background: #334155;
+      }
+
+      .shot .frame {
+        min-height: 320px;
+        display: grid;
+        place-items: center;
+        background: #f8fafc;
+        border-radius: 18px;
+        overflow: hidden;
+      }
+
+      .shot img {
+        display: block;
+        width: 100%;
+        height: 420px;
+        object-fit: cover;
+        object-position: top;
+        background: #f8fafc;
+      }
+
+      .shot.missing img {
+        display: none;
+      }
+
+      .drop {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        min-height: 320px;
+        color: var(--muted);
+        text-align: center;
+        padding: 20px;
+      }
+
+      .shot.missing .drop {
+        display: flex;
+      }
+
+      .drop b {
+        font-family: "IBM Plex Mono", monospace;
+        color: var(--blue);
+        font-size: 0.78rem;
+      }
+
+      figcaption {
+        padding: 16px 4px 0;
+      }
+
+      figcaption strong {
+        display: block;
+        font-size: 1.05rem;
+        margin-bottom: 4px;
+        font-family: Outfit, sans-serif;
+      }
+
+      figcaption span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .site-end {
+        display: none;
+      }
+
+      a {
+        color: var(--blue);
+      }
+
+      @media (max-width: 1100px) {
+        .shots {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 900px) {
+        .doc-header,
+        .doc-footer {
+          padding: 12px 16px;
+          flex-wrap: wrap;
+          gap: 6px 12px;
+        }
+
+        .shell {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          position: sticky;
+          top: 49px;
+          z-index: 4;
+          height: auto;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+          padding: 12px 16px 14px;
+        }
+
+        .side-kicker,
+        .side-repo {
+          display: none;
+        }
+
+        .sidebar nav {
+          flex-direction: row;
+          overflow-x: auto;
+          gap: 8px;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+        }
+
+        .sidebar nav::-webkit-scrollbar {
+          display: none;
+        }
+
+        .sidebar nav a {
+          flex: 0 0 auto;
+          white-space: nowrap;
+          background: var(--soft);
+          padding: 8px 12px;
+        }
+
+        .content {
+          padding: 20px 16px 48px;
+        }
+
+        .cover,
+        section {
+          padding: 24px 20px 20px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .doc-header,
+        .doc-footer {
+          font-size: 0.74rem;
+          padding: 10px 14px;
+        }
+
+        .cover,
+        section {
+          padding: 18px 16px 16px;
+          border-radius: 16px;
+        }
+
+        .title-bar {
+          align-items: center;
+          gap: 12px;
+        }
+
+        .title-bar .kicker {
+          letter-spacing: 0.08em;
+          font-size: 0.68rem;
+        }
+
+        .title-bar h1 {
+          font-size: clamp(1.7rem, 8vw, 2.2rem);
+        }
+
+        .title-bar .logo img {
+          width: 58px;
+        }
+
+        .lede {
+          font-size: 1rem;
+          margin-bottom: 16px;
+        }
+
+        .facts {
+          gap: 8px;
+          margin-bottom: 16px;
+        }
+
+        .fact {
+          font-size: 0.82rem;
+          padding: 7px 11px;
+        }
+
+        .repo-banner {
+          flex-direction: column;
+          align-items: flex-start;
+          border-radius: 16px;
+          padding: 14px 16px;
+          gap: 6px;
+        }
+
+        .repo-banner b {
+          font-size: 0.72rem;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+        }
+
+        .repo-banner span {
+          font-size: 0.8rem;
+        }
+
+        .toc-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .shots {
+          grid-template-columns: minmax(0, 280px);
+          justify-content: center;
+          gap: 28px 16px;
+        }
+
+        .shot img,
+        .drop {
+          min-height: 0;
+          height: 380px;
+        }
+
+        table {
+          display: block;
+        }
+
+        thead {
+          display: none;
+        }
+
+        tbody,
+        tr,
+        td {
+          display: block;
+          width: 100%;
+        }
+
+        tr {
+          background: var(--soft);
+          border-radius: 12px;
+          padding: 12px 14px;
+          margin-bottom: 10px;
+        }
+
+        td {
+          border: 0;
+          padding: 2px 0;
+        }
+
+        td:first-child {
+          padding-bottom: 6px;
+        }
+
+        pre {
+          font-size: 0.78rem;
+        }
+
+        .back-toc {
+          display: inline-flex;
+          float: none;
+          margin: 0 0 12px;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .doc-header span {
+          display: none;
+        }
+
+        .sidebar nav a em {
+          display: none;
+        }
+      }
+
+      @media print {
+        @page {
+          size: A4;
+          margin: 24mm 18mm 22mm 18mm;
+        }
+
+        body {
+          background: #fff;
+          color: #111;
+          font-family: "Times New Roman", Times, serif;
+          font-size: 12pt;
+          line-height: 1.55;
+        }
+
+        .shell {
+          display: block;
+          max-width: none;
+        }
+
+        .sidebar,
+        .actions,
+        .no-print,
+        .back-toc,
+        .page-end {
+          display: none !important;
+        }
+
+        .content {
+          padding: 0;
+        }
+
+        .print-only {
+          display: block;
+        }
+
+        .toc-grid {
+          display: none;
+        }
+
+        .report-toc {
+          display: block;
+          list-style: none;
+          padding: 0;
+          margin: 12px 0 0;
+        }
+
+        .report-toc li {
+          margin: 10px 0;
+        }
+
+        .report-toc a {
+          display: block;
+          color: #111;
+          text-decoration: none;
+          border-bottom: 1px dotted #999;
+          padding: 2px 0 6px;
+        }
+
+        .doc-header,
+        .doc-footer {
+          position: fixed;
+          left: 0;
+          right: 0;
+          padding: 4px 0;
+          background: #fff;
+          font-family: "Times New Roman", Times, serif;
+          font-size: 10pt;
+          color: #333;
+          letter-spacing: 0;
+        }
+
+        .doc-header {
+          top: 0;
+          border-top: 0;
+          border-bottom: 1px solid #222;
+        }
+
+        .doc-footer {
+          bottom: 0;
+          margin: 0;
+          border-top: 1px solid #222;
+        }
+
+        .cover,
+        section {
+          break-inside: avoid;
+          box-shadow: none;
+          border: 0;
+          border-radius: 0;
+          background: #fff;
+          padding: 0 0 10px;
+          margin: 0 0 22px;
+        }
+
+        .cover {
+          text-align: center;
+          padding-bottom: 18px;
+          border-bottom: 1px solid #222;
+          margin-bottom: 28px;
+        }
+
+        .title-bar {
+          border: 0;
+          padding: 0;
+          margin-bottom: 12px;
+          justify-content: center;
+        }
+
+        .title-bar h1 {
+          font-size: 26pt;
+          color: #111;
+        }
+
+        .kicker {
+          color: #333;
+          letter-spacing: 0.08em;
+        }
+
+        .lede {
+          max-width: none;
+          margin: 0 auto 16px;
+          color: #222;
+        }
+
+        .facts {
+          display: block;
+          margin: 16px auto 0;
+          max-width: 420px;
+          text-align: left;
+        }
+
+        .fact {
+          background: none;
+          border-radius: 0;
+          padding: 4px 0;
+          border-bottom: 1px solid #ddd;
+        }
+
+        .fact b {
+          display: inline;
+          color: #111;
+          margin-right: 8px;
+        }
+
+        .repo-banner {
+          background: none;
+          border: 0;
+          justify-content: center;
+          margin-top: 16px;
+          padding: 0;
+        }
+
+        h2 {
+          font-size: 16pt;
+          color: #111;
+          margin: 0 0 10px;
+          padding-bottom: 4px;
+          border-bottom: 1px solid #222;
+        }
+
+        .num {
+          background: none;
+          color: #111;
+          width: auto;
+          height: auto;
+          margin-right: 6px;
+        }
+
+        .grid {
+          display: block;
+        }
+
+        .card {
+          background: none;
+          border: 0;
+          border-top: 0;
+          border-radius: 0;
+          padding: 6px 0 8px;
+          border-bottom: 1px solid #ddd;
+        }
+
+        .card strong {
+          display: inline;
+          margin-right: 6px;
+        }
+
+        .card p {
+          display: inline;
+        }
+
+        table {
+          border: 1px solid #222;
+        }
+
+        th,
+        td {
+          border-bottom: 1px solid #222;
+          padding: 8px 7px;
+        }
+
+        th {
+          color: #111;
+          background: #f3f3f3;
+        }
+
+        .note {
+          background: none;
+          border-left: 0;
+          border: 1px solid #222;
+          border-radius: 0;
+          padding: 8px 10px;
+        }
+
+        .shots {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 16px 12px;
+        }
+
+        .phone {
+          padding: 8px 6px 10px;
+        }
+
+        .shot img {
+          height: 260px;
+        }
+
+        .shot.missing {
+          display: none;
+        }
+
+        .toc a,
+        .repo-banner a,
+        a[href^="http"] {
+          color: #111;
+          text-decoration: underline;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="doc-header">
+      <strong>DEPI · Assignment 13</strong>
+      <span>Notes App documentation</span>
+    </header>
+    <div class="shell">
+      <aside class="sidebar">
+        <p class="side-kicker">Guide</p>
+        <nav>
+          <a href="#overview"><em>00</em> Overview</a>
+          <a href="#steps"><em>01</em> What I did</a>
+          <a href="#features"><em>02</em> Features</a>
+          <a href="#files"><em>03</em> File structure</a>
+          <a href="#screenshots"><em>04</em> Screenshots</a>
+        </nav>
+        <a class="side-repo" href="https://github.com/devDoniaAlhosin/flutter-note-app.git">
+          Open GitHub repository
+        </a>
+      </aside>
+      <main class="content">
+      <article class="cover" id="overview">
+        <div class="title-bar">
+          <div class="intro">
+            <p class="kicker">Assignment 13 documentation</p>
+            <h1>Notes App</h1>
+          </div>
+          <a class="logo" href="https://depi.gov.eg" target="_blank" rel="noreferrer">
+            <img src="https://depi.gov.eg/assets/images/proAr.png" alt="DEPI" />
+          </a>
+        </div>
+        <p class="lede">
+          This page covers what I built in the Notes app, the features, and
+          the role of each project file.
+        </p>
+        <div class="facts">
+          <div class="fact"><b>Program</b> DEPI · Flutter track</div>
+          <div class="fact"><b>Assignment</b> Week 7 · Assignment 13</div>
+          <div class="fact"><b>App name</b> Notes</div>
+          <div class="fact"><b>State</b> Provider</div>
+          <div class="fact"><b>Storage</b> SharedPreferences</div>
+          <div class="fact"><b>Student repo</b> flutter-note-app</div>
+        </div>
+        <a class="repo-banner" href="https://github.com/devDoniaAlhosin/flutter-note-app.git">
+          <b>GitHub repository</b>
+          <span>github.com/devDoniaAlhosin/flutter-note-app</span>
+        </a>
+      </article>
+
+      <section id="toc" class="toc print-only">
+        <h2>Table of contents</h2>
+        <ol class="report-toc">
+          <li><a href="#steps">1. What I did</a></li>
+          <li><a href="#features">2. Features</a></li>
+          <li><a href="#files">3. File structure</a></li>
+          <li><a href="#screenshots">4. Screenshots</a></li>
+        </ol>
+      </section>
+
+      <section id="steps">
+        <a class="back-toc" href="#toc">Back to contents</a>
+        <h2><span class="num">1</span>What I did</h2>
+        <ol class="steps">
+          <li>
+            <strong>I turned the Flutter starter into a Notes app</strong>
+            named Notes, with a title and description on every note.
+          </li>
+          <li>
+            <strong>I built the home list and the editor screens</strong>
+            so I can add, open, and change notes.
+          </li>
+          <li>
+            <strong>I used Provider</strong>
+            (<code>NotesProvider</code>) so the list and the editor share one notes state.
+          </li>
+          <li>
+            <strong>I saved notes on the device</strong>
+            with <code>shared_preferences</code> as JSON.
+          </li>
+          <li>
+            <strong>I added search, swipe delete with undo,</strong>
+            and a check button to save. Going back asks “Are you sure?”
+          </li>
+        </ol>
+      </section>
+
+      <section id="features">
+        <a class="back-toc" href="#toc">Back to contents</a>
+        <h2><span class="num">2</span>Features</h2>
+        <div class="grid">
+          <div class="card"><strong>Add note</strong><p>Tap + and fill Title and Description.</p></div>
+          <div class="card green"><strong>Edit note</strong><p>Tap a card to change the text.</p></div>
+          <div class="card gold"><strong>Delete note</strong><p>Swipe left, or delete in the editor. Swipe can Undo.</p></div>
+          <div class="card"><strong>Search</strong><p>Filter by title or description.</p></div>
+          <div class="card green"><strong>Save on device</strong><p>Notes stay after closing the app.</p></div>
+          <div class="card gold"><strong>Save with check</strong><p>Press the check button to save. Back asks “Are you sure?”</p></div>
+          <div class="card"><strong>Empty states</strong><p>Clear messages when the list or search is empty.</p></div>
+          <div class="card green"><strong>Light / dark theme</strong><p>Follows the phone system setting.</p></div>
+        </div>
+      </section>
+
+      <section id="files">
+        <a class="back-toc" href="#toc">Back to contents</a>
+        <h2><span class="num">3</span>File structure</h2>
+        <p>Each file has one job. Screens talk to Provider. Provider talks to the repository.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>File</th>
+              <th>What it does</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>lib/main.dart</code></td>
+              <td>Starts the app, sets the theme, and wraps the app with <code>ChangeNotifierProvider</code> so every screen can use <code>NotesProvider</code>.</td>
+            </tr>
+            <tr>
+              <td><code>lib/models/note.dart</code></td>
+              <td>The Note model: id, title, description/content, created time, updated time, and JSON helpers.</td>
+            </tr>
+            <tr>
+              <td><code>lib/data/note_repository.dart</code></td>
+              <td>Loads and saves the notes list as JSON with <code>shared_preferences</code>.</td>
+            </tr>
+            <tr>
+              <td><code>lib/providers/notes_provider.dart</code></td>
+              <td>Shared state: add, update, delete, restore, and search. Calls <code>notifyListeners()</code> after a change.</td>
+            </tr>
+            <tr>
+              <td><code>lib/screens/notes_home_page.dart</code></td>
+              <td>Home screen: note cards, search box, + button, and swipe to delete.</td>
+            </tr>
+            <tr>
+              <td><code>lib/screens/note_editor_page.dart</code></td>
+              <td>Editor screen: Title and Description fields. Check button saves. Back shows “Are you sure?”</td>
+            </tr>
+            <tr>
+              <td><code>android/.../strings.xml</code></td>
+              <td>Sets the Android app name to Notes.</td>
+            </tr>
+            <tr>
+              <td><code>docs/assign_13-documantation_note_app.html</code></td>
+              <td>This HTML documentation page.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="screenshots">
+        <a class="back-toc" href="#toc">Back to contents</a>
+        <h2><span class="num">4</span>Screenshots</h2>
+        <p>App screens shown in phone frames. Four on the first row, search on the next row.</p>
+        <div class="shots">
+          <figure class="shot missing">
+            <div class="phone">
+              <div class="phone-bar"></div>
+              <div class="frame">
+                <img src="screenshots/01-home-empty.png" alt="Empty home screen" />
+                <div class="drop">Waiting for screenshot<b>01-home-empty.png</b></div>
+              </div>
+            </div>
+            <figcaption>
+              <strong>Empty home</strong>
+              <span>No notes. Search and + button.</span>
+            </figcaption>
+          </figure>
+          <figure class="shot missing">
+            <div class="phone">
+              <div class="phone-bar"></div>
+              <div class="frame">
+                <img src="screenshots/02-add-note.png" alt="Add note form" />
+                <div class="drop">Waiting for screenshot<b>02-add-note.png</b></div>
+              </div>
+            </div>
+            <figcaption>
+              <strong>Add note</strong>
+              <span>Title and Description fields.</span>
+            </figcaption>
+          </figure>
+          <figure class="shot missing">
+            <div class="phone">
+              <div class="phone-bar"></div>
+              <div class="frame">
+                <img src="screenshots/03-note-list.png" alt="Notes list" />
+                <div class="drop">Waiting for screenshot<b>03-note-list.png</b></div>
+              </div>
+            </div>
+            <figcaption>
+              <strong>Notes list</strong>
+              <span>Saved notes with preview and time.</span>
+            </figcaption>
+          </figure>
+          <figure class="shot missing">
+            <div class="phone">
+              <div class="phone-bar"></div>
+              <div class="frame">
+                <img src="screenshots/04-edit-note.png" alt="Edit note screen" />
+                <div class="drop">Waiting for screenshot<b>04-edit-note.png</b></div>
+              </div>
+            </div>
+            <figcaption>
+              <strong>Edit note</strong>
+              <span>Change text, then save or delete.</span>
+            </figcaption>
+          </figure>
+          <figure class="shot missing">
+            <div class="phone">
+              <div class="phone-bar"></div>
+              <div class="frame">
+                <img src="screenshots/05-search.png" alt="Search notes" />
+                <div class="drop">Waiting for screenshot<b>05-search.png</b></div>
+              </div>
+            </div>
+            <figcaption>
+              <strong>Search</strong>
+              <span>Filter notes by typed words.</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      </main>
+    </div>
+    <footer class="doc-footer">
+      <span>github.com/devDoniaAlhosin/flutter-note-app</span>
+      <strong>Week 7 · Flutter · Notes</strong>
+    </footer>
+    <script>
+      document.querySelectorAll(".shot").forEach((shot) => {
+        const img = shot.querySelector("img");
+        if (!img) return;
+        const ready = () => shot.classList.remove("missing");
+        if (img.complete && img.naturalWidth > 0) ready();
+        img.addEventListener("load", ready);
+        img.addEventListener("error", () => shot.classList.add("missing"));
+      });
+
+      const links = [...document.querySelectorAll(".sidebar nav a")];
+      const sections = [...document.querySelectorAll("#overview, #steps, #features, #files, #screenshots")];
+      const setActive = () => {
+        const y = window.scrollY + 140;
+        let current = sections[0];
+        sections.forEach((section) => {
+          if (section.offsetTop <= y) current = section;
+        });
+        links.forEach((link) => {
+          link.classList.toggle("active", link.getAttribute("href") === `#${current.id}`);
+        });
+      };
+      window.addEventListener("scroll", setActive, { passive: true });
+      setActive();
+    </script>
+  </body>
+</html>

@@ -1,30 +1,40 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:technical_w7_assignment13_note_app/data/note_repository.dart';
 import 'package:technical_w7_assignment13_note_app/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('shows empty state and can add a note', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    await tester.pumpWidget(NotesApp(repository: NoteRepository(prefs)));
+    await tester.pumpAndSettle();
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    expect(find.text('Notes'), findsWidgets);
+    expect(find.text('No notes yet'), findsOneWidget);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    await tester.tap(find.byType(FloatingActionButton));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byKey(const Key('note_title_field')), 'Shopping');
+    await tester.enterText(
+      find.byKey(const Key('note_content_field')),
+      'Milk and eggs',
+    );
+    await tester.tap(find.byKey(const Key('save_note_button')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Shopping'), findsOneWidget);
+    expect(find.text('Milk and eggs'), findsOneWidget);
+
+    await tester.enterText(find.byKey(const Key('search_notes_field')), 'shop');
+    await tester.pumpAndSettle();
+    expect(find.text('Shopping'), findsOneWidget);
+
+    await tester.enterText(find.byKey(const Key('search_notes_field')), 'xyz');
+    await tester.pumpAndSettle();
+    expect(find.text('No matching notes'), findsOneWidget);
   });
 }
