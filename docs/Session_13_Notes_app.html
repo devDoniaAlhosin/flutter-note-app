@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Session 13 — Notes app</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="session-doc.css" />
+  </head>
+  <body>
+    <header class="doc-header">
+      <strong>DEPI · Session 13</strong>
+      <span>Notes app documentation</span>
+    </header>
+    <div class="shell">
+      <aside class="sidebar">
+        <p class="side-kicker">Session 13</p>
+        <nav>
+          <a href="#overview"><em>00</em> Overview</a>
+          <a href="#edits"><em>01</em> What I edited</a>
+          <a href="#features"><em>02</em> Features</a>
+          <a href="#files"><em>03</em> Files</a>
+        </nav>
+        <a class="side-repo" href="https://github.com/devDoniaAlhosin/flutter-note-app.git">Open GitHub repository</a>
+      </aside>
+      <main class="content">
+        <article class="cover" id="overview">
+          <div class="title-bar">
+            <div class="intro">
+              <p class="kicker">Week 7 · Session 13</p>
+              <h1>Notes app</h1>
+            </div>
+            <a class="logo" href="https://depi.gov.eg" target="_blank" rel="noreferrer">
+              <img src="https://depi.gov.eg/assets/images/proAr.png" alt="DEPI" />
+            </a>
+          </div>
+          <p class="lede">
+            In Session 13 I turned the Flutter starter into a Notes app. I
+            built the home list and the editor. Each note has a title and a
+            description.
+          </p>
+          <div class="facts">
+            <div class="fact"><b>Session</b> 13</div>
+            <div class="fact"><b>App</b> Notes</div>
+            <div class="fact"><b>Screens</b> Home and editor</div>
+            <div class="fact"><b>Fields</b> Title and description</div>
+          </div>
+          <a class="repo-banner" href="https://github.com/devDoniaAlhosin/flutter-note-app.git">
+            <b>GitHub repository</b>
+            <span>github.com/devDoniaAlhosin/flutter-note-app</span>
+          </a>
+        </article>
+
+        <section id="edits">
+          <h2><span class="num">1</span>What I edited</h2>
+          <ol class="steps">
+            <li><strong>I named the app Notes</strong> on the launcher and in the app bar.</li>
+            <li><strong>I built the home screen</strong> with a list, search box, and + button.</li>
+            <li><strong>I built the editor</strong> with Title and Description fields.</li>
+            <li><strong>I save only with the check.</strong> Back asks “Are you sure?” if there are unsaved changes.</li>
+            <li><strong>I can swipe to delete</strong> a note, with Undo.</li>
+          </ol>
+        </section>
+
+        <section id="features">
+          <h2><span class="num">2</span>Features I added</h2>
+          <div class="grid">
+            <div class="card green"><strong>Add</strong><p>Tap + and fill Title and Description.</p></div>
+            <div class="card gold"><strong>Edit</strong><p>Tap a card to change the text.</p></div>
+            <div class="card"><strong>Delete</strong><p>Swipe left, or delete in the editor.</p></div>
+            <div class="card green"><strong>Search</strong><p>Filter by title or description.</p></div>
+            <div class="card gold"><strong>Check save</strong><p>The check saves. Back does not auto-save.</p></div>
+          </div>
+        </section>
+
+        <section id="files">
+          <h2><span class="num">3</span>Session 13 files</h2>
+          <table>
+            <thead>
+              <tr><th>File</th><th>What it does</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>lib/models/note.dart</code></td><td>Note data: id, title, description, times.</td></tr>
+              <tr><td><code>lib/screens/notes_home_page.dart</code></td><td>Home list, search, + button, swipe delete.</td></tr>
+              <tr><td><code>lib/screens/note_editor_page.dart</code></td><td>Editor. Check saves. Back asks “Are you sure?”</td></tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+    <footer class="doc-footer">
+      <span>github.com/devDoniaAlhosin/flutter-note-app</span>
+      <strong>Session 13 · Notes app</strong>
+    </footer>
+    <script>
+      const links = [...document.querySelectorAll(".sidebar nav a")];
+      const sections = [...document.querySelectorAll("#overview, #edits, #features, #files")];
+      const setActive = () => {
+        const y = window.scrollY + 140;
+        let current = sections[0];
+        sections.forEach((s) => { if (s.offsetTop <= y) current = s; });
+        links.forEach((l) => l.classList.toggle("active", l.getAttribute("href") === `#${current.id}`));
+      };
+      window.addEventListener("scroll", setActive, { passive: true });
+      setActive();
+    </script>
+  </body>
+</html>

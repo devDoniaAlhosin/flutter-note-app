@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Session 14 — Provider, emit, omit</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="session-doc.css" />
+  </head>
+  <body>
+    <header class="doc-header">
+      <strong>DEPI · Session 14</strong>
+      <span>Provider, emit, omit documentation</span>
+    </header>
+    <div class="shell">
+      <aside class="sidebar">
+        <p class="side-kicker">Session 14</p>
+        <nav>
+          <a href="#overview"><em>00</em> Overview</a>
+          <a href="#edits"><em>01</em> What I edited</a>
+          <a href="#emit"><em>02</em> Emit and omit</a>
+          <a href="#files"><em>03</em> Files</a>
+        </nav>
+        <a class="side-repo" href="https://github.com/devDoniaAlhosin/flutter-note-app.git">Open GitHub repository</a>
+      </aside>
+      <main class="content">
+        <article class="cover" id="overview">
+          <div class="title-bar">
+            <div class="intro">
+              <p class="kicker">Week 7 · Session 14</p>
+              <h1>Emit and omit</h1>
+            </div>
+            <a class="logo" href="https://depi.gov.eg" target="_blank" rel="noreferrer">
+              <img src="https://depi.gov.eg/assets/images/proAr.png" alt="DEPI" />
+            </a>
+          </div>
+          <p class="lede">
+            In Session 14 I shared notes state across screens. After a change
+            I emit a new list. I omit empty notes, unmatched search, and
+            unsaved back.
+          </p>
+          <div class="facts">
+            <div class="fact"><b>Session</b> 14</div>
+            <div class="fact"><b>Emit</b> notifyListeners</div>
+            <div class="fact"><b>Omit</b> skip empty or unsaved</div>
+            <div class="fact"><b>Watch</b> home list rebuilds</div>
+          </div>
+          <a class="repo-banner" href="https://github.com/devDoniaAlhosin/flutter-note-app.git">
+            <b>GitHub repository</b>
+            <span>github.com/devDoniaAlhosin/flutter-note-app</span>
+          </a>
+        </article>
+
+        <section id="edits">
+          <h2><span class="num">1</span>What I edited</h2>
+          <ol class="steps">
+            <li><strong>I put shared notes state</strong> in one class the home and editor both use.</li>
+            <li><strong>I emit</strong> with <code>notifyListeners()</code> after save, delete, undo, or search.</li>
+            <li><strong>The home view watches</strong> that state, so the list rebuilds.</li>
+            <li><strong>I omit</strong> a save when title and description are empty, and when I go back without the check.</li>
+          </ol>
+          <p>
+            Today that shared class is <code>NotesController</code> (Session 16).
+            Session 14 is the emit and omit idea.
+          </p>
+        </section>
+
+        <section id="emit">
+          <h2><span class="num">2</span>Emit and omit on the note screen</h2>
+          <div class="grid">
+            <div class="card green">
+              <strong>Emit</strong>
+              <p>Send the new notes list so the home screen redraws.</p>
+            </div>
+            <div class="card gold">
+              <strong>Omit</strong>
+              <p>Skip what should not save or show.</p>
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr><th>On the note screen</th><th>What happens</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Press the check</td><td><strong>Emit</strong> the new or updated note.</td></tr>
+              <tr><td>Swipe delete or undo</td><td><strong>Emit</strong> the list without that note, or put it back.</td></tr>
+              <tr><td>Type in search</td><td><strong>Emit</strong> the query. <strong>Omit</strong> notes that do not match.</td></tr>
+              <tr><td>Empty title and description</td><td><strong>Omit</strong> the save.</td></tr>
+              <tr><td>Back without the check</td><td><strong>Omit</strong> the draft. Ask “Are you sure?”</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="files">
+          <h2><span class="num">3</span>Session 14 files</h2>
+          <table>
+            <thead>
+              <tr><th>File</th><th>What it does</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>lib/main.dart</code></td><td>Gives the shared state to every screen.</td></tr>
+              <tr><td><code>lib/screens/notes_home_page.dart</code></td><td>Watches state and shows emitted notes.</td></tr>
+              <tr><td><code>lib/screens/note_editor_page.dart</code></td><td>Asks to save or delete. Empty and back are omitted.</td></tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+    <footer class="doc-footer">
+      <span>github.com/devDoniaAlhosin/flutter-note-app</span>
+      <strong>Session 14 · Emit and omit</strong>
+    </footer>
+    <script>
+      const links = [...document.querySelectorAll(".sidebar nav a")];
+      const sections = [...document.querySelectorAll("#overview, #edits, #emit, #files")];
+      const setActive = () => {
+        const y = window.scrollY + 140;
+        let current = sections[0];
+        sections.forEach((s) => { if (s.offsetTop <= y) current = s; });
+        links.forEach((l) => l.classList.toggle("active", l.getAttribute("href") === `#${current.id}`));
+      };
+      window.addEventListener("scroll", setActive, { passive: true });
+      setActive();
+    </script>
+  </body>
+</html>

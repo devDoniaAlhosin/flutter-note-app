@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'controllers/notes_controller.dart';
 import 'data/note_repository.dart';
-import 'providers/notes_provider.dart';
 import 'screens/notes_home_page.dart';
 
 Future<void> main() async {
@@ -20,7 +20,7 @@ class NotesApp extends StatelessWidget {
     const seed = Color(0xFF2F6F5E);
 
     return ChangeNotifierProvider(
-      create: (_) => NotesProvider(repository),
+      create: (_) => NotesController(repository),
       child: MaterialApp(
         title: 'Notes',
         debugShowCheckedModeBanner: false,

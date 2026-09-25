@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../controllers/notes_controller.dart';
 import '../models/note.dart';
-import '../providers/notes_provider.dart';
 import 'note_editor_page.dart';
 
 class NotesHomePage extends StatefulWidget {
@@ -22,7 +22,7 @@ class _NotesHomePageState extends State<NotesHomePage> {
   }
 
   void _updateSearch(String value) {
-    context.read<NotesProvider>().setSearchQuery(value);
+    context.read<NotesController>().setSearchQuery(value);
   }
 
   Future<void> _openEditor({Note? note}) {
@@ -32,8 +32,8 @@ class _NotesHomePageState extends State<NotesHomePage> {
   }
 
   Future<void> _deleteNote(Note note) async {
-    final notesProvider = context.read<NotesProvider>();
-    final index = await notesProvider.deleteNote(note.id);
+    final controller = context.read<NotesController>();
+    final index = await controller.deleteNote(note.id);
     if (index < 0 || !mounted) {
       return;
     }
@@ -44,7 +44,7 @@ class _NotesHomePageState extends State<NotesHomePage> {
         content: const Text('Note deleted'),
         action: SnackBarAction(
           label: 'Undo',
-          onPressed: () => notesProvider.restoreNote(note, index),
+          onPressed: () => controller.restoreNote(note, index),
         ),
       ),
     );
@@ -52,9 +52,9 @@ class _NotesHomePageState extends State<NotesHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final notesProvider = context.watch<NotesProvider>();
-    final visible = notesProvider.visibleNotes;
-    final query = notesProvider.searchQuery.trim();
+    final controller = context.watch<NotesController>();
+    final visible = controller.visibleNotes;
+    final query = controller.searchQuery.trim();
 
     return Scaffold(
       appBar: AppBar(title: const Text('Notes')),
@@ -88,7 +88,7 @@ class _NotesHomePageState extends State<NotesHomePage> {
               ),
             ),
           ),
-          Expanded(child: _buildList(notesProvider, visible)),
+          Expanded(child: _buildList(controller, visible)),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -99,8 +99,8 @@ class _NotesHomePageState extends State<NotesHomePage> {
     );
   }
 
-  Widget _buildList(NotesProvider notesProvider, List<Note> visible) {
-    if (notesProvider.notes.isEmpty) {
+  Widget _buildList(NotesController controller, List<Note> visible) {
+    if (controller.notes.isEmpty) {
       return const _EmptyState(
         icon: Icons.sticky_note_2_outlined,
         title: 'No notes yet',

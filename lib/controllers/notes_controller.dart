@@ -3,8 +3,10 @@ import 'package:flutter/foundation.dart';
 import '../data/note_repository.dart';
 import '../models/note.dart';
 
-class NotesProvider extends ChangeNotifier {
-  NotesProvider(this._repository) {
+/// Session 16 MVC controller. Views call this class. It talks to the model
+/// and DatabaseHelper. It does not build widgets.
+class NotesController extends ChangeNotifier {
+  NotesController(this._repository) {
     loadNotes();
   }
 

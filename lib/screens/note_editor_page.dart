@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../controllers/notes_controller.dart';
 import '../models/note.dart';
-import '../providers/notes_provider.dart';
 
 class NoteEditorPage extends StatefulWidget {
   const NoteEditorPage({super.key, this.note});
@@ -49,7 +49,7 @@ class _NoteEditorPageState extends State<NoteEditorPage> {
     );
   }
 
-  NotesProvider get _notes => context.read<NotesProvider>();
+  NotesController get _notes => context.read<NotesController>();
 
   bool get _hasUnsavedChanges {
     final draft = _draft();

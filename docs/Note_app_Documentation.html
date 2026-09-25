@@ -1081,7 +1081,7 @@
   <body>
     <header class="doc-header">
       <strong>DEPI · Notes App Documentation</strong>
-      <span>Week 7 · Sessions 13, 14, 15</span>
+      <span>Week 7 · Sessions 13–16</span>
     </header>
     <div class="shell">
       <aside class="sidebar">
@@ -1112,8 +1112,8 @@
         </div>
         <p class="lede">
           This page explains the edits I made in each Week 7 session: the
-          Notes screens, Provider with emit and omit, and Session 15
-          SQLite DatabaseHelper.
+          Notes screens, Provider with emit and omit, SQLite DatabaseHelper,
+          and Session 16 MVC with a controller.
         </p>
         <div class="facts">
           <div class="fact"><b>Program</b> DEPI · Flutter track</div>
@@ -1121,7 +1121,7 @@
           <div class="fact"><b>Session 13</b> Notes screens &amp; CRUD</div>
           <div class="fact"><b>Session 14</b> Provider · emit · omit</div>
           <div class="fact"><b>Session 15</b> SQLite · DatabaseHelper</div>
-          <div class="fact"><b>App name</b> Notes</div>
+          <div class="fact"><b>Session 16</b> MVC · Controller</div>
         </div>
         <a class="repo-banner" href="https://github.com/devDoniaAlhosin/flutter-note-app.git">
           <b>GitHub repository</b>
@@ -1173,6 +1173,14 @@
               SQL stays in one class so screens do not write SQL.
             </p>
           </div>
+          <div class="card green">
+            <strong>Session 16 — MVC controller</strong>
+            <p>
+              I split the app into Model (<code>Note</code>), View (screens),
+              and Controller (<code>NotesController</code>). Screens call the
+              controller. The controller talks to the database.
+            </p>
+          </div>
         </div>
         <table>
           <thead>
@@ -1198,6 +1206,11 @@
               <td>SQLite table, insert / update / delete one note row</td>
               <td><code>database_helper.dart</code>, <code>note_repository.dart</code></td>
             </tr>
+            <tr>
+              <td>Session 16</td>
+              <td>MVC: Model, View, Controller. Screens use <code>NotesController</code></td>
+              <td><code>notes_controller.dart</code>, home and editor screens</td>
+            </tr>
           </tbody>
         </table>
       </section>
@@ -1215,8 +1228,8 @@
             so I can add, open, and change notes.
           </li>
           <li>
-            <strong>I used Provider</strong>
-            (<code>NotesProvider</code>) so the list and the editor share one notes state.
+            <strong>I used MVC with a controller</strong>
+            (<code>NotesController</code>). The view calls the controller. The controller updates the model and SQLite.
           </li>
           <li>
             <strong>I applied emit and omit</strong>
@@ -1247,7 +1260,7 @@
           <div class="card gold"><strong>Save with check</strong><p>Press the check button to save. Back asks “Are you sure?”</p></div>
           <div class="card"><strong>Empty states</strong><p>Clear messages when the list or search is empty.</p></div>
           <div class="card green"><strong>Light / dark theme</strong><p>Follows the phone system setting.</p></div>
-          <div class="card gold"><strong>Provider</strong><p>One <code>NotesProvider</code> for the list and the editor.</p></div>
+          <div class="card gold"><strong>MVC controller</strong><p>Views call <code>NotesController</code>. The controller talks to SQLite.</p></div>
           <div class="card"><strong>Emit &amp; omit</strong><p>Emit after a change. Omit empty, unmatched, or unsaved notes.</p></div>
           <div class="card green"><strong>DatabaseHelper</strong><p>SQLite create, edit, and delete change one note row.</p></div>
         </div>
@@ -1257,14 +1270,13 @@
         <a class="back-toc" href="#toc">Back to contents</a>
         <h2><span class="num">4</span>Provider, emit, and omit</h2>
         <p>
-          Lecture 14 uses Provider for shared state. In Bloc you call
-          <code>emit</code>. In this app I emit with
-          <code>notifyListeners()</code>. Omit means I skip what should not
-          be saved or shown.
+          Session 16 uses MVC. The view calls <code>NotesController</code>.
+          The controller emits with <code>notifyListeners()</code>. Omit
+          means I skip what should not be saved or shown.
         </p>
         <div class="flow">
           <span>1. Note screen action</span>
-          <span>2. NotesProvider</span>
+          <span>2. NotesController</span>
           <span>3. Emit or omit</span>
           <span>4. Home list updates</span>
         </div>
@@ -1326,7 +1338,7 @@
       <section id="files">
         <a class="back-toc" href="#toc">Back to contents</a>
         <h2><span class="num">5</span>File structure</h2>
-        <p>Each file has one job. Screens talk to Provider. Provider talks to the repository. The repository talks to DatabaseHelper.</p>
+        <p>MVC: View talks to Controller. Controller talks to the repository. The repository talks to DatabaseHelper.</p>
         <table>
           <thead>
             <tr>
@@ -1352,16 +1364,16 @@
               <td>Asks DatabaseHelper to load, insert, update, or delete a note. Screens do not write SQL.</td>
             </tr>
             <tr>
-              <td><code>lib/providers/notes_provider.dart</code></td>
-              <td>Lecture 14 shared state. Add, update, delete, restore, and search. <strong>Emit</strong> with <code>notifyListeners()</code>. <strong>Omit</strong> empty notes, unmatched search, and no-change search.</td>
+              <td><code>lib/controllers/notes_controller.dart</code></td>
+              <td>Session 16 MVC controller. Add, update, delete, restore, and search. Views call it. It emits with <code>notifyListeners()</code> and talks to the repository.</td>
             </tr>
             <tr>
               <td><code>lib/screens/notes_home_page.dart</code></td>
-              <td>Home screen: watches Provider, shows emitted notes, omits notes that do not match search.</td>
+              <td>View: watches the controller, shows notes, omits notes that do not match search.</td>
             </tr>
             <tr>
               <td><code>lib/screens/note_editor_page.dart</code></td>
-              <td>Editor screen: check emits a save. Empty note is omitted. Back omits unsaved text and asks “Are you sure?”</td>
+              <td>View: check asks the controller to save. Empty note is omitted. Back omits unsaved text and asks “Are you sure?”</td>
             </tr>
             <tr>
               <td><code>android/.../strings.xml</code></td>
@@ -1369,7 +1381,7 @@
             </tr>
             <tr>
               <td><code>docs/Note_app_Documentation.html</code></td>
-              <td>This Notes App Documentation page. It explains the edits in sessions 13, 14, and 15.</td>
+              <td>This Notes App Documentation page. It covers sessions 13, 14, 15, and 16 in one file.</td>
             </tr>
           </tbody>
         </table>
@@ -1446,7 +1458,7 @@
     </div>
     <footer class="doc-footer">
       <span>github.com/devDoniaAlhosin/flutter-note-app</span>
-      <strong>Notes App Documentation · Sessions 13–15</strong>
+      <strong>Notes App Documentation · Sessions 13–16</strong>
     </footer>
     <script>
       document.querySelectorAll(".shot").forEach((shot) => {

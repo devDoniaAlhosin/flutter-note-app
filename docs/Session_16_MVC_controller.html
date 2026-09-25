@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Session 16 — MVC controller</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --blue: #2563eb;
+        --green: #059669;
+        --gold: #d97706;
+        --ink: #0f172a;
+        --muted: #64748b;
+        --paper: #f8fafc;
+        --card: #ffffff;
+        --line: #e2e8f0;
+        --soft: #f1f5f9;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        font-family: Ubuntu, sans-serif;
+        line-height: 1.7;
+      }
+
+      .doc-header,
+      .doc-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        padding: 14px 36px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--muted);
+      }
+
+      .doc-header {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        border-top: 4px solid var(--blue);
+      }
+
+      .doc-header strong,
+      .doc-footer strong {
+        color: var(--ink);
+      }
+
+      .doc-footer {
+        border-bottom: 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .shell {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        max-width: 1400px;
+        margin: 0 auto;
+        min-height: calc(100vh - 108px);
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 53px;
+        height: calc(100vh - 53px);
+        overflow: auto;
+        padding: 28px 20px 32px;
+        background: #fff;
+        border-right: 1px solid var(--line);
+      }
+
+      .side-kicker {
+        margin: 0 0 14px;
+        color: var(--muted);
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      .sidebar nav {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .sidebar nav a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 12px;
+        border-radius: 12px;
+        color: #334155;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .sidebar nav a em {
+        width: 28px;
+        color: var(--muted);
+        font-style: normal;
+        font-size: 0.78rem;
+      }
+
+      .sidebar nav a:hover,
+      .sidebar nav a.active {
+        background: #eff6ff;
+        color: var(--blue);
+      }
+
+      .side-repo {
+        display: block;
+        margin-top: 22px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+        color: var(--blue);
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .content {
+        padding: 36px 40px 72px;
+      }
+
+      .cover,
+      section {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 32px 36px 28px;
+        margin-bottom: 24px;
+      }
+
+      .title-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .kicker {
+        color: var(--blue);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-size: 0.78rem;
+        font-weight: 700;
+        margin: 0 0 8px;
+      }
+
+      h1,
+      h2 {
+        font-family: Ubuntu, sans-serif;
+        line-height: 1.2;
+        margin: 0 0 10px;
+        color: #16345a;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 4vw, 2.8rem);
+      }
+
+      h2 {
+        font-size: 1.45rem;
+      }
+
+      .title-bar h1 {
+        margin: 0;
+      }
+
+      .title-bar .logo img {
+        width: 88px;
+        height: auto;
+        display: block;
+      }
+
+      .lede {
+        color: var(--muted);
+        font-size: 1.1rem;
+        max-width: 70ch;
+      }
+
+      .facts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 20px 0 22px;
+      }
+
+      .fact {
+        background: var(--soft);
+        border-radius: 999px;
+        padding: 8px 14px;
+        font-size: 0.92rem;
+      }
+
+      .fact b {
+        color: var(--blue);
+        margin-right: 6px;
+        font-size: 0.72rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .repo-banner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px 24px;
+        margin: 0;
+        padding: 16px 22px;
+        background: #eef4ff;
+        border-radius: 999px;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .repo-banner:hover {
+        background: #e0ebff;
+      }
+
+      .repo-banner b {
+        color: #1e3a8a;
+        white-space: nowrap;
+      }
+
+      .repo-banner span {
+        font-family: "Ubuntu Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--blue);
+        word-break: break-all;
+      }
+
+      .num {
+        display: inline-flex;
+        width: 28px;
+        height: 28px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #dbe8f8;
+        color: var(--blue);
+        font-size: 0.85rem;
+        font-weight: 700;
+        margin-right: 8px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        gap: 16px;
+        margin: 20px 0 8px;
+      }
+
+      .card {
+        background: var(--soft);
+        border-radius: 14px;
+        padding: 18px 18px 12px;
+        border-top: 4px solid var(--blue);
+      }
+
+      .card.green {
+        border-top-color: var(--green);
+      }
+
+      .card.gold {
+        border-top-color: var(--gold);
+      }
+
+      .card strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .flow {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 10px;
+        margin: 16px 0 8px;
+      }
+
+      .flow span {
+        background: #eaf4ff;
+        color: #16345a;
+        border: 1px solid #c5daf3;
+        border-radius: 12px;
+        padding: 14px 10px;
+        text-align: center;
+        font-weight: 700;
+        font-size: 0.9rem;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 12px 0 8px;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 14px 12px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+      }
+
+      th {
+        color: var(--blue);
+        font-size: 0.78rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      code {
+        font-family: "Ubuntu Mono", monospace;
+        font-size: 0.86em;
+        background: #eaf2fb;
+        color: #1a4d8c;
+        padding: 0.12em 0.4em;
+        border-radius: 6px;
+      }
+
+      pre {
+        overflow: auto;
+        background: #f3f7fd;
+        border: 1px solid var(--line);
+        padding: 14px 16px;
+        border-radius: 12px;
+        font-family: "Ubuntu Mono", monospace;
+        font-size: 0.86rem;
+      }
+
+      ol.steps > li {
+        margin: 14px 0;
+      }
+
+      a {
+        color: var(--blue);
+      }
+
+      @media (max-width: 900px) {
+        .doc-header,
+        .doc-footer,
+        .content {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+
+        .shell {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          position: sticky;
+          top: 49px;
+          z-index: 4;
+          height: auto;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+          padding: 12px 16px;
+        }
+
+        .side-kicker,
+        .side-repo {
+          display: none;
+        }
+
+        .sidebar nav {
+          flex-direction: row;
+          overflow-x: auto;
+        }
+
+        .sidebar nav a {
+          flex: 0 0 auto;
+          white-space: nowrap;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="doc-header">
+      <strong>DEPI · Session 16</strong>
+      <span>MVC controller documentation</span>
+    </header>
+    <div class="shell">
+      <aside class="sidebar">
+        <p class="side-kicker">Session 16</p>
+        <nav>
+          <a href="#overview"><em>00</em> Overview</a>
+          <a href="#mvc"><em>01</em> What MVC is</a>
+          <a href="#edits"><em>02</em> What I edited</a>
+          <a href="#controller"><em>03</em> The controller</a>
+          <a href="#files"><em>04</em> Files</a>
+        </nav>
+        <a class="side-repo" href="https://github.com/devDoniaAlhosin/flutter-note-app.git">
+          Open GitHub repository
+        </a>
+      </aside>
+      <main class="content">
+        <article class="cover" id="overview">
+          <div class="title-bar">
+            <div class="intro">
+              <p class="kicker">Week 7 · Session 16</p>
+              <h1>MVC controller</h1>
+            </div>
+            <a class="logo" href="https://depi.gov.eg" target="_blank" rel="noreferrer">
+              <img src="https://depi.gov.eg/assets/images/proAr.png" alt="DEPI" />
+            </a>
+          </div>
+          <p class="lede">
+            In Session 16 I kept the same Notes app and organized it as MVC.
+            The view only draws the screen. The controller does the work.
+            The model is the note data.
+          </p>
+          <div class="facts">
+            <div class="fact"><b>Session</b> 16</div>
+            <div class="fact"><b>Pattern</b> MVC</div>
+            <div class="fact"><b>Controller</b> NotesController</div>
+            <div class="fact"><b>Model</b> Note</div>
+            <div class="fact"><b>View</b> Home and editor screens</div>
+          </div>
+          <a class="repo-banner" href="https://github.com/devDoniaAlhosin/flutter-note-app.git">
+            <b>GitHub repository</b>
+            <span>github.com/devDoniaAlhosin/flutter-note-app</span>
+          </a>
+        </article>
+
+        <section id="mvc">
+          <h2><span class="num">1</span>What MVC is</h2>
+          <p>
+            MVC means Model, View, Controller. Each part has one job so the
+            screens do not talk to the database.
+          </p>
+          <div class="grid">
+            <div class="card green">
+              <strong>Model</strong>
+              <p>
+                The data. <code>Note</code> has id, title, description, and
+                times. It does not draw UI.
+              </p>
+            </div>
+            <div class="card gold">
+              <strong>View</strong>
+              <p>
+                The screens. Home shows the list and search. The editor shows
+                Title and Description. The view only calls the controller.
+              </p>
+            </div>
+            <div class="card">
+              <strong>Controller</strong>
+              <p>
+                <code>NotesController</code> loads, saves, deletes, and
+                searches. It talks to the repository and DatabaseHelper.
+              </p>
+            </div>
+          </div>
+          <div class="flow">
+            <span>1. View action</span>
+            <span>2. NotesController</span>
+            <span>3. Repository / SQLite</span>
+            <span>4. View updates</span>
+          </div>
+        </section>
+
+        <section id="edits">
+          <h2><span class="num">2</span>What I edited in Session 16</h2>
+          <ol class="steps">
+            <li>
+              <strong>I added</strong>
+              <code>lib/controllers/notes_controller.dart</code>.
+              This is the controller. Views call it. It does not build widgets.
+            </li>
+            <li>
+              <strong>I moved the note logic</strong>
+              out of <code>NotesProvider</code> into
+              <code>NotesController</code>: load, save, delete, restore, search.
+            </li>
+            <li>
+              <strong>I updated the views</strong>
+              so home and editor use <code>context.read</code> /
+              <code>watch&lt;NotesController&gt;</code>.
+            </li>
+            <li>
+              <strong>I updated</strong>
+              <code>main.dart</code> to provide
+              <code>NotesController</code> instead of
+              <code>NotesProvider</code>.
+            </li>
+          </ol>
+          <p>
+            Session 13 screens, Session 14 emit/omit, and Session 15
+            DatabaseHelper stay. Session 16 only changes who the view talks to.
+          </p>
+        </section>
+
+        <section id="controller">
+          <h2><span class="num">3</span>What the controller does</h2>
+          <p>
+            After a change the controller emits with
+            <code>notifyListeners()</code>. The home view watches it, so the
+            list rebuilds.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Controller method</th>
+                <th>What it does</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>loadNotes()</code></td>
+                <td>Reads notes from SQLite and emits the list.</td>
+              </tr>
+              <tr>
+                <td><code>saveNote()</code></td>
+                <td>Create inserts one row. Edit updates that row. Then emit.</td>
+              </tr>
+              <tr>
+                <td><code>deleteNote()</code></td>
+                <td>Removes one row and emits.</td>
+              </tr>
+              <tr>
+                <td><code>restoreNote()</code></td>
+                <td>Undo after swipe. Inserts the note again.</td>
+              </tr>
+              <tr>
+                <td><code>setSearchQuery()</code></td>
+                <td>Emits a new query. Unmatched notes are omitted from <code>visibleNotes</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+          <pre>View  →  NotesController.saveNote(note)
+     →  NoteRepository.insertNote / updateNote
+     →  DatabaseHelper (one SQLite row)
+     →  notifyListeners()
+     →  Home view rebuilds</pre>
+        </section>
+
+        <section id="files">
+          <h2><span class="num">4</span>Session 16 files</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>File</th>
+                <th>MVC role</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>lib/models/note.dart</code></td>
+                <td>Model</td>
+              </tr>
+              <tr>
+                <td><code>lib/screens/notes_home_page.dart</code></td>
+                <td>View — list and search</td>
+              </tr>
+              <tr>
+                <td><code>lib/screens/note_editor_page.dart</code></td>
+                <td>View — create and edit</td>
+              </tr>
+              <tr>
+                <td><code>lib/controllers/notes_controller.dart</code></td>
+                <td>Controller</td>
+              </tr>
+              <tr>
+                <td><code>lib/data/note_repository.dart</code></td>
+                <td>Used by the controller</td>
+              </tr>
+              <tr>
+                <td><code>lib/data/database_helper.dart</code></td>
+                <td>SQLite from Session 15</td>
+              </tr>
+              <tr>
+                <td><code>lib/main.dart</code></td>
+                <td>Provides <code>NotesController</code> to the views</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+    <footer class="doc-footer">
+      <span>github.com/devDoniaAlhosin/flutter-note-app</span>
+      <strong>Session 16 · MVC controller</strong>
+    </footer>
+    <script>
+      const links = [...document.querySelectorAll(".sidebar nav a")];
+      const sections = [...document.querySelectorAll("#overview, #mvc, #edits, #controller, #files")];
+      const setActive = () => {
+        const y = window.scrollY + 140;
+        let current = sections[0];
+        sections.forEach((section) => {
+          if (section.offsetTop <= y) current = section;
+        });
+        links.forEach((link) => {
+          link.classList.toggle("active", link.getAttribute("href") === `#${current.id}`);
+        });
+      };
+      window.addEventListener("scroll", setActive, { passive: true });
+      setActive();
+    </script>
+  </body>
+</html>

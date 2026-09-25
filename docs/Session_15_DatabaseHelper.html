@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Session 15 — DatabaseHelper</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="session-doc.css" />
+  </head>
+  <body>
+    <header class="doc-header">
+      <strong>DEPI · Session 15</strong>
+      <span>DatabaseHelper documentation</span>
+    </header>
+    <div class="shell">
+      <aside class="sidebar">
+        <p class="side-kicker">Session 15</p>
+        <nav>
+          <a href="#overview"><em>00</em> Overview</a>
+          <a href="#why"><em>01</em> Why DatabaseHelper</a>
+          <a href="#edits"><em>02</em> What I edited</a>
+          <a href="#files"><em>03</em> Files</a>
+        </nav>
+        <a class="side-repo" href="https://github.com/devDoniaAlhosin/flutter-note-app.git">Open GitHub repository</a>
+      </aside>
+      <main class="content">
+        <article class="cover" id="overview">
+          <div class="title-bar">
+            <div class="intro">
+              <p class="kicker">Week 7 · Session 15</p>
+              <h1>DatabaseHelper</h1>
+            </div>
+            <a class="logo" href="https://depi.gov.eg" target="_blank" rel="noreferrer">
+              <img src="https://depi.gov.eg/assets/images/proAr.png" alt="DEPI" />
+            </a>
+          </div>
+          <p class="lede">
+            In Session 15 I saved notes in SQLite. Create, edit, and delete
+            change one row. SQL stays in <code>DatabaseHelper</code>.
+          </p>
+          <div class="facts">
+            <div class="fact"><b>Session</b> 15</div>
+            <div class="fact"><b>Storage</b> SQLite notes.db</div>
+            <div class="fact"><b>Create</b> INSERT</div>
+            <div class="fact"><b>Edit</b> UPDATE</div>
+            <div class="fact"><b>Delete</b> DELETE</div>
+          </div>
+          <a class="repo-banner" href="https://github.com/devDoniaAlhosin/flutter-note-app.git">
+            <b>GitHub repository</b>
+            <span>github.com/devDoniaAlhosin/flutter-note-app</span>
+          </a>
+        </article>
+
+        <section id="why">
+          <h2><span class="num">1</span>Why I used DatabaseHelper</h2>
+          <p>
+            Before this session, all notes were one JSON string. Every save
+            rewrote the whole list. DatabaseHelper opens <code>notes.db</code>
+            and a <code>notes</code> table. One class holds the SQL. Screens
+            do not write SQL.
+          </p>
+          <div class="grid">
+            <div class="card gold">
+              <strong>Before</strong>
+              <p>SharedPreferences. One key. Rewrite every note as JSON.</p>
+            </div>
+            <div class="card green">
+              <strong>After</strong>
+              <p>SQLite rows. Insert, update, or delete only that note.</p>
+            </div>
+          </div>
+          <div class="flow">
+            <span>1. Save / edit / delete</span>
+            <span>2. Repository</span>
+            <span>3. DatabaseHelper</span>
+            <span>4. notes.db row</span>
+          </div>
+        </section>
+
+        <section id="edits">
+          <h2><span class="num">2</span>What I edited</h2>
+          <ol class="steps">
+            <li><strong>I added</strong> <code>sqflite</code> and <code>path</code>.</li>
+            <li><strong>I created</strong> <code>lib/data/database_helper.dart</code> with a singleton and CRUD.</li>
+            <li><strong>I pointed the repository</strong> at the helper. Save is insert or update one row.</li>
+            <li><strong>I removed SharedPreferences</strong> from startup in <code>main.dart</code>.</li>
+          </ol>
+          <table>
+            <thead>
+              <tr><th>Action</th><th>SQL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Create note</td><td><code>INSERT</code> one row</td></tr>
+              <tr><td>Edit note</td><td><code>UPDATE</code> that row</td></tr>
+              <tr><td>Delete note</td><td><code>DELETE</code> that row</td></tr>
+              <tr><td>Open the app</td><td><code>SELECT</code> all rows</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="files">
+          <h2><span class="num">3</span>Session 15 files</h2>
+          <table>
+            <thead>
+              <tr><th>File</th><th>What it does</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>lib/data/database_helper.dart</code></td><td>Opens SQLite, creates the table, insert / update / delete / get.</td></tr>
+              <tr><td><code>lib/data/note_repository.dart</code></td><td>Asks the helper. No SQL in screens.</td></tr>
+              <tr><td><code>lib/main.dart</code></td><td>Starts the app without SharedPreferences.</td></tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+    <footer class="doc-footer">
+      <span>github.com/devDoniaAlhosin/flutter-note-app</span>
+      <strong>Session 15 · DatabaseHelper</strong>
+    </footer>
+    <script>
+      const links = [...document.querySelectorAll(".sidebar nav a")];
+      const sections = [...document.querySelectorAll("#overview, #why, #edits, #files")];
+      const setActive = () => {
+        const y = window.scrollY + 140;
+        let current = sections[0];
+        sections.forEach((s) => { if (s.offsetTop <= y) current = s; });
+        links.forEach((l) => l.classList.toggle("active", l.getAttribute("href") === `#${current.id}`));
+      };
+      window.addEventListener("scroll", setActive, { passive: true });
+      setActive();
+    </script>
+  </body>
+</html>
