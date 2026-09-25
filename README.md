@@ -7,11 +7,25 @@ A Flutter notes app where I applied the content of **DEPI Week 7 Lecture 13** an
 
 Repository: [https://github.com/devDoniaAlhosin/flutter-note-app.git](https://github.com/devDoniaAlhosin/flutter-note-app.git)
 
-HTML documentation: open [`docs/assign_13-documantation_note_app.html`](docs/assign_13-documantation_note_app.html) in a browser.
-
-Screenshots in the HTML docs load from GitHub, for example [01-home-empty.png](https://github.com/devDoniaAlhosin/flutter-note-app/blob/1d8478111e7fa366e1e009921f2e6a26a2dcf72d/docs/screenshots/01-home-empty.png).
-
 The launcher and in-app name is **Notes**. The Dart package name stays `technical_w7_assignment13_note_app` so the existing Android Studio run configuration keeps working.
+
+## Documentation
+
+Open [`docs/assign_13-documantation_note_app.html`](docs/assign_13-documantation_note_app.html) in a browser.
+
+The HTML page covers what I did, the features, Provider with emit and omit, the file structure, and the screenshots. It uses the **Ubuntu** font and loads screenshot images from GitHub.
+
+## Screenshots
+
+Images come from the GitHub repository:
+
+| Screen | Link |
+|---|---|
+| Empty home | [01-home-empty.png](https://github.com/devDoniaAlhosin/flutter-note-app/blob/1d8478111e7fa366e1e009921f2e6a26a2dcf72d/docs/screenshots/01-home-empty.png) |
+| Add note | [02-add-note.png](https://github.com/devDoniaAlhosin/flutter-note-app/blob/1d8478111e7fa366e1e009921f2e6a26a2dcf72d/docs/screenshots/02-add-note.png) |
+| Notes list | [03-note-list.png](https://github.com/devDoniaAlhosin/flutter-note-app/blob/1d8478111e7fa366e1e009921f2e6a26a2dcf72d/docs/screenshots/03-note-list.png) |
+| Edit note | [04-edit-note.png](https://github.com/devDoniaAlhosin/flutter-note-app/blob/1d8478111e7fa366e1e009921f2e6a26a2dcf72d/docs/screenshots/04-edit-note.png) |
+| Search | [05-search.png](https://github.com/devDoniaAlhosin/flutter-note-app/blob/1d8478111e7fa366e1e009921f2e6a26a2dcf72d/docs/screenshots/05-search.png) |
 
 ## Features
 
