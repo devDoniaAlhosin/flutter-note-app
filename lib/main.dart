@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/note_repository.dart';
 import 'providers/notes_provider.dart';
@@ -8,8 +7,7 @@ import 'screens/notes_home_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final prefs = await SharedPreferences.getInstance();
-  runApp(NotesApp(repository: NoteRepository(prefs)));
+  runApp(NotesApp(repository: NoteRepository()));
 }
 
 class NotesApp extends StatelessWidget {

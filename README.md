@@ -1,9 +1,10 @@
 # Notes
 
-A Flutter notes app where I applied the content of **DEPI Week 7 Lecture 13** and **Lecture 14**.
+A Flutter notes app where I applied **DEPI Week 7 Sessions 13, 14, and 15**.
 
-- **Lecture 13:** Notes app screens, title and description, add / edit / search / delete, and local storage
-- **Lecture 14:** Provider state, plus **emit** and **omit** on the note screens
+- **Session 13:** Notes app screens, title and description, add / edit / search / delete
+- **Session 14:** Provider state, plus **emit** and **omit** on the note screens
+- **Session 15:** SQLite **DatabaseHelper** so create, edit, and delete change one note row
 
 Repository: [https://github.com/devDoniaAlhosin/flutter-note-app.git](https://github.com/devDoniaAlhosin/flutter-note-app.git)
 
@@ -11,9 +12,9 @@ The launcher and in-app name is **Notes**. The Dart package name stays `technica
 
 ## Documentation
 
-Open [`docs/assign_13-documantation_note_app.html`](docs/assign_13-documantation_note_app.html) in a browser.
+Open [`docs/Note_app_Documentation.html`](docs/Note_app_Documentation.html) in a browser.
 
-The HTML page covers what I did, the features, Provider with emit and omit, the file structure, and the screenshots. It uses the **Ubuntu** font and loads screenshot images from GitHub.
+The HTML page is **Notes App Documentation**. It explains the edits I made in each session, the features, Provider with emit and omit, DatabaseHelper, the file structure, and the screenshots. It uses the **Ubuntu** font and loads screenshot images from GitHub.
 
 ## Screenshots
 
@@ -36,7 +37,7 @@ Images come from the GitHub repository:
 - **Leave alert** that asks “Are you sure?” if there are unsaved changes
 - **Delete notes** by swiping left, or from the editor, with undo after a swipe
 - **Search** notes by title or description
-- **Local persistence** so notes stay after I close the app (`shared_preferences`)
+- **SQLite persistence** so notes stay after I close the app (`DatabaseHelper` + `notes.db`)
 - **Empty and no-results states** when the list or search is empty
 - **Timestamps** showing the last update time
 - **Light and dark themes** that follow the system setting
@@ -51,13 +52,16 @@ Images come from the GitHub repository:
 3. Run the app on an emulator or device.
 4. After a name or code change, use **Hot Restart** (not only Hot Reload) so the new UI loads.
 
+Notes that were saved only in SharedPreferences will not appear after Session 15. New notes are stored in SQLite.
+
 ## Project structure
 
 - `lib/main.dart` — app theme, startup, and `ChangeNotifierProvider`
 - `lib/models/note.dart` — note data
-- `lib/data/note_repository.dart` — load and save notes on the device
+- `lib/data/database_helper.dart` — SQLite open, table, insert / update / delete / get
+- `lib/data/note_repository.dart` — talks to DatabaseHelper
 - `lib/providers/notes_provider.dart` — shared notes state; emit and omit live here
 - `lib/screens/notes_home_page.dart` — note list and search; watches emitted state
 - `lib/screens/note_editor_page.dart` — create and edit a note; check emits, empty/back omit
 - `android/app/src/main/res/values/strings.xml` — Android app name **Notes**
-- `docs/assign_13-documantation_note_app.html` — HTML documentation for Week 7 Lecture 13 and 14
+- `docs/Note_app_Documentation.html` — Notes App Documentation for sessions 13, 14, and 15

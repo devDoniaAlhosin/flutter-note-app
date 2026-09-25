@@ -1,32 +1,17 @@
-import 'dart:convert';
-
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../models/note.dart';
+import 'database_helper.dart';
 
 class NoteRepository {
-  NoteRepository(this._prefs);
+  NoteRepository([DatabaseHelper? helper])
+    : _helper = helper ?? DatabaseHelper.instance;
 
-  static const _storageKey = 'notes_v1';
+  final DatabaseHelper _helper;
 
-  final SharedPreferences _prefs;
+  Future<List<Note>> load() => _helper.getNotes();
 
-  List<Note> load() {
-    final raw = _prefs.getString(_storageKey);
-    if (raw == null || raw.isEmpty) {
-      return [];
-    }
+  Future<void> insertNote(Note note) => _helper.insertNote(note);
 
-    final decoded = jsonDecode(raw) as List<dynamic>;
-    final notes = decoded
-        .map((item) => Note.fromJson(item as Map<String, dynamic>))
-        .toList();
-    notes.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
-    return notes;
-  }
+  Future<void> updateNote(Note note) => _helper.updateNote(note);
 
-  Future<void> saveAll(List<Note> notes) {
-    final encoded = jsonEncode(notes.map((note) => note.toJson()).toList());
-    return _prefs.setString(_storageKey, encoded);
-  }
+  Future<void> deleteNote(String id) => _helper.deleteNote(id);
 }

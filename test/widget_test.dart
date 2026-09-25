@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:technical_w7_assignment13_note_app/data/database_helper.dart';
 import 'package:technical_w7_assignment13_note_app/data/note_repository.dart';
 import 'package:technical_w7_assignment13_note_app/main.dart';
 
 void main() {
   testWidgets('shows empty state and can add a note', (tester) async {
-    SharedPreferences.setMockInitialValues({});
-    final prefs = await SharedPreferences.getInstance();
+    final repository = NoteRepository(DatabaseHelper.memory());
 
-    await tester.pumpWidget(NotesApp(repository: NoteRepository(prefs)));
+    await tester.pumpWidget(NotesApp(repository: repository));
     await tester.pumpAndSettle();
 
     expect(find.text('Notes'), findsWidgets);

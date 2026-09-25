@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Week 7 Lecture 13 & 14 — Notes App Documentation</title>
+    <title>Notes App Documentation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -1080,15 +1080,15 @@
   </head>
   <body>
     <header class="doc-header">
-      <strong>DEPI · Week 7 · Lecture 13 & 14</strong>
-      <span>Notes App documentation</span>
+      <strong>DEPI · Notes App Documentation</strong>
+      <span>Week 7 · Sessions 13, 14, 15</span>
     </header>
     <div class="shell">
       <aside class="sidebar">
         <p class="side-kicker">Guide</p>
         <nav>
           <a href="#overview"><em>00</em> Overview</a>
-          <a href="#lectures"><em>01</em> Lecture 13 &amp; 14</a>
+          <a href="#sessions"><em>01</em> Sessions</a>
           <a href="#steps"><em>02</em> What I did</a>
           <a href="#features"><em>03</em> Features</a>
           <a href="#state"><em>04</em> Provider, emit, omit</a>
@@ -1103,7 +1103,7 @@
       <article class="cover" id="overview">
         <div class="title-bar">
           <div class="intro">
-            <p class="kicker">Week 7 · Lecture 13 &amp; 14 applied</p>
+            <p class="kicker">Notes App Documentation</p>
             <h1>Notes App</h1>
           </div>
           <a class="logo" href="https://depi.gov.eg" target="_blank" rel="noreferrer">
@@ -1111,17 +1111,17 @@
           </a>
         </div>
         <p class="lede">
-          I applied the content of Week 7 Lecture 13 and Lecture 14 in this
-          Notes app: the note screens from lecture 13, then Provider with
-          emit and omit from lecture 14.
+          This page explains the edits I made in each Week 7 session: the
+          Notes screens, Provider with emit and omit, and Session 15
+          SQLite DatabaseHelper.
         </p>
         <div class="facts">
           <div class="fact"><b>Program</b> DEPI · Flutter track</div>
           <div class="fact"><b>Week</b> Week 7</div>
-          <div class="fact"><b>Lecture 13</b> Notes app screens &amp; storage</div>
-          <div class="fact"><b>Lecture 14</b> Provider · emit · omit</div>
+          <div class="fact"><b>Session 13</b> Notes screens &amp; CRUD</div>
+          <div class="fact"><b>Session 14</b> Provider · emit · omit</div>
+          <div class="fact"><b>Session 15</b> SQLite · DatabaseHelper</div>
           <div class="fact"><b>App name</b> Notes</div>
-          <div class="fact"><b>Student repo</b> flutter-note-app</div>
         </div>
         <a class="repo-banner" href="https://github.com/devDoniaAlhosin/flutter-note-app.git">
           <b>GitHub repository</b>
@@ -1132,7 +1132,7 @@
       <section id="toc" class="toc print-only">
         <h2>Table of contents</h2>
         <ol class="report-toc">
-          <li><a href="#lectures">1. Lecture 13 and 14</a></li>
+          <li><a href="#sessions">1. Sessions</a></li>
           <li><a href="#steps">2. What I did</a></li>
           <li><a href="#features">3. Features</a></li>
           <li><a href="#state">4. Provider, emit, and omit</a></li>
@@ -1141,24 +1141,23 @@
         </ol>
       </section>
 
-      <section id="lectures">
+      <section id="sessions">
         <a class="back-toc" href="#toc">Back to contents</a>
-        <h2><span class="num">1</span>Lecture 13 and Lecture 14</h2>
+        <h2><span class="num">1</span>Edits in each session</h2>
         <p>
-          This project applies the Week 7 lecture content. Lecture 13 is the
-          Notes app. Lecture 14 is Provider with emit and omit.
+          I used the same Notes app for Week 7. Each session added one piece.
         </p>
         <div class="grid">
           <div class="card green">
-            <strong>Lecture 13 — Notes app</strong>
+            <strong>Session 13 — Notes app</strong>
             <p>
               I built the home list and the editor. Each note has a title and
               a description. I can add, edit, search, swipe-delete, and save
-              notes on the device with <code>shared_preferences</code>.
+              with the check button. Back asks “Are you sure?”
             </p>
           </div>
           <div class="card gold">
-            <strong>Lecture 14 — Provider, emit, omit</strong>
+            <strong>Session 14 — Provider, emit, omit</strong>
             <p>
               I moved notes into <code>NotesProvider</code>. After a change I
               <strong>emit</strong> with <code>notifyListeners()</code>. I
@@ -1166,25 +1165,38 @@
               back.
             </p>
           </div>
+          <div class="card">
+            <strong>Session 15 — DatabaseHelper</strong>
+            <p>
+              I replaced SharedPreferences JSON with SQLite. Create, edit, and
+              delete now change one row through <code>DatabaseHelper</code>.
+              SQL stays in one class so screens do not write SQL.
+            </p>
+          </div>
         </div>
         <table>
           <thead>
             <tr>
-              <th>Lecture</th>
-              <th>Content I applied</th>
+              <th>Session</th>
+              <th>What I edited</th>
               <th>Where in the app</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Lecture 13</td>
-              <td>Note screens, title and description, CRUD, search, local save</td>
-              <td><code>notes_home_page.dart</code>, <code>note_editor_page.dart</code>, <code>note_repository.dart</code></td>
+              <td>Session 13</td>
+              <td>Note screens, title and description, CRUD, search, check save</td>
+              <td><code>notes_home_page.dart</code>, <code>note_editor_page.dart</code></td>
             </tr>
             <tr>
-              <td>Lecture 14</td>
+              <td>Session 14</td>
               <td>Provider, emit new state, omit what should not save or show</td>
-              <td><code>notes_provider.dart</code>, <code>main.dart</code>, note screens</td>
+              <td><code>notes_provider.dart</code>, <code>main.dart</code></td>
+            </tr>
+            <tr>
+              <td>Session 15</td>
+              <td>SQLite table, insert / update / delete one note row</td>
+              <td><code>database_helper.dart</code>, <code>note_repository.dart</code></td>
             </tr>
           </tbody>
         </table>
@@ -1212,8 +1224,9 @@
             Empty notes, unmatched search, and back without the check are omitted.
           </li>
           <li>
-            <strong>I saved notes on the device</strong>
-            with <code>shared_preferences</code> as JSON.
+            <strong>I saved notes in SQLite</strong>
+            with <code>DatabaseHelper</code>. Create inserts one row. Edit
+            updates that row. Delete removes that row.
           </li>
           <li>
             <strong>I added search, swipe delete with undo,</strong>
@@ -1236,6 +1249,7 @@
           <div class="card green"><strong>Light / dark theme</strong><p>Follows the phone system setting.</p></div>
           <div class="card gold"><strong>Provider</strong><p>One <code>NotesProvider</code> for the list and the editor.</p></div>
           <div class="card"><strong>Emit &amp; omit</strong><p>Emit after a change. Omit empty, unmatched, or unsaved notes.</p></div>
+          <div class="card green"><strong>DatabaseHelper</strong><p>SQLite create, edit, and delete change one note row.</p></div>
         </div>
       </section>
 
@@ -1312,7 +1326,7 @@
       <section id="files">
         <a class="back-toc" href="#toc">Back to contents</a>
         <h2><span class="num">5</span>File structure</h2>
-        <p>Each file has one job. Screens talk to Provider. Provider talks to the repository.</p>
+        <p>Each file has one job. Screens talk to Provider. Provider talks to the repository. The repository talks to DatabaseHelper.</p>
         <table>
           <thead>
             <tr>
@@ -1323,15 +1337,19 @@
           <tbody>
             <tr>
               <td><code>lib/main.dart</code></td>
-              <td>Starts the app, sets the theme, and wraps the app with <code>ChangeNotifierProvider</code> so every screen can use <code>NotesProvider</code>.</td>
+              <td>Starts the app, sets the theme, and wraps the app with <code>ChangeNotifierProvider</code>. No SharedPreferences init.</td>
             </tr>
             <tr>
               <td><code>lib/models/note.dart</code></td>
               <td>The Note model: id, title, description/content, created time, updated time, and JSON helpers.</td>
             </tr>
             <tr>
+              <td><code>lib/data/database_helper.dart</code></td>
+              <td>Session 15 SQLite helper. Opens <code>notes.db</code>, creates the notes table, and runs insert, update, delete, and get for one note at a time.</td>
+            </tr>
+            <tr>
               <td><code>lib/data/note_repository.dart</code></td>
-              <td>Loads and saves the notes list as JSON with <code>shared_preferences</code>.</td>
+              <td>Asks DatabaseHelper to load, insert, update, or delete a note. Screens do not write SQL.</td>
             </tr>
             <tr>
               <td><code>lib/providers/notes_provider.dart</code></td>
@@ -1350,8 +1368,8 @@
               <td>Sets the Android app name to Notes.</td>
             </tr>
             <tr>
-              <td><code>docs/assign_13-documantation_note_app.html</code></td>
-              <td>This HTML documentation page for Week 7 Lecture 13 and Lecture 14.</td>
+              <td><code>docs/Note_app_Documentation.html</code></td>
+              <td>This Notes App Documentation page. It explains the edits in sessions 13, 14, and 15.</td>
             </tr>
           </tbody>
         </table>
@@ -1428,7 +1446,7 @@
     </div>
     <footer class="doc-footer">
       <span>github.com/devDoniaAlhosin/flutter-note-app</span>
-      <strong>Week 7 · Lecture 13 &amp; 14 · Notes</strong>
+      <strong>Notes App Documentation · Sessions 13–15</strong>
     </footer>
     <script>
       document.querySelectorAll(".shot").forEach((shot) => {
@@ -1441,7 +1459,7 @@
       });
 
       const links = [...document.querySelectorAll(".sidebar nav a")];
-      const sections = [...document.querySelectorAll("#overview, #lectures, #steps, #features, #state, #files, #screenshots")];
+      const sections = [...document.querySelectorAll("#overview, #sessions, #steps, #features, #state, #files, #screenshots")];
       const setActive = () => {
         const y = window.scrollY + 140;
         let current = sections[0];
