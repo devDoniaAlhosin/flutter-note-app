@@ -1,12 +1,15 @@
 # Notes
 
-A Flutter notes app for DEPI Week 7 Assignment 13. I built it so I can create, edit, search, and save notes on the device.
+A Flutter notes app where I applied the content of **DEPI Week 7 Lecture 13** and **Lecture 14**.
+
+- **Lecture 13:** Notes app screens, title and description, add / edit / search / delete, and local storage
+- **Lecture 14:** Provider state, plus **emit** and **omit** on the note screens
 
 Repository: [https://github.com/devDoniaAlhosin/flutter-note-app.git](https://github.com/devDoniaAlhosin/flutter-note-app.git)
 
 HTML documentation: open [`docs/assign_13-documantation_note_app.html`](docs/assign_13-documantation_note_app.html) in a browser.
 
-Screenshots: save emulator captures in [`docs/screenshots/`](docs/screenshots) using the names in that folder’s README. The HTML page shows them automatically.
+Screenshots in the HTML docs load from GitHub, for example [01-home-empty.png](https://github.com/devDoniaAlhosin/flutter-note-app/blob/1d8478111e7fa366e1e009921f2e6a26a2dcf72d/docs/screenshots/01-home-empty.png).
 
 The launcher and in-app name is **Notes**. The Dart package name stays `technical_w7_assignment13_note_app` so the existing Android Studio run configuration keeps working.
 
@@ -24,6 +27,8 @@ The launcher and in-app name is **Notes**. The Dart package name stays `technica
 - **Timestamps** showing the last update time
 - **Light and dark themes** that follow the system setting
 - **Provider state management** so the list and editor share one `NotesProvider`
+- **Emit** a new state with `notifyListeners()` after save, delete, undo, or search
+- **Omit** empty notes, unmatched search results, no-change search, and unsaved back
 
 ## How to run
 
@@ -37,8 +42,8 @@ The launcher and in-app name is **Notes**. The Dart package name stays `technica
 - `lib/main.dart` — app theme, startup, and `ChangeNotifierProvider`
 - `lib/models/note.dart` — note data
 - `lib/data/note_repository.dart` — load and save notes on the device
-- `lib/providers/notes_provider.dart` — shared notes state (`ChangeNotifier`)
-- `lib/screens/notes_home_page.dart` — note list and search
-- `lib/screens/note_editor_page.dart` — create and edit a note
+- `lib/providers/notes_provider.dart` — shared notes state; emit and omit live here
+- `lib/screens/notes_home_page.dart` — note list and search; watches emitted state
+- `lib/screens/note_editor_page.dart` — create and edit a note; check emits, empty/back omit
 - `android/app/src/main/res/values/strings.xml` — Android app name **Notes**
-- `docs/assign_13-documantation_note_app.html` — HTML documentation
+- `docs/assign_13-documantation_note_app.html` — HTML documentation for Week 7 Lecture 13 and 14

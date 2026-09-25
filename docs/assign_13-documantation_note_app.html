@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Assignment 13 — Notes App Documentation</title>
+    <title>Week 7 Lecture 13 & 14 — Notes App Documentation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -36,7 +36,7 @@
         margin: 0;
         color: var(--ink);
         background: var(--paper);
-        font-family: Outfit, sans-serif;
+        font-family: Ubuntu, sans-serif;
         line-height: 1.7;
         overflow-x: hidden;
       }
@@ -212,7 +212,7 @@
       h1,
       h2,
       h3 {
-        font-family: "Source Serif 4", Georgia, serif;
+        font-family: Ubuntu, sans-serif;
         line-height: 1.2;
         margin: 0 0 10px;
       }
@@ -287,7 +287,7 @@
       }
 
       .repo-banner span {
-        font-family: "IBM Plex Mono", monospace;
+        font-family: "Ubuntu Mono", monospace;
         font-size: 0.9rem;
         font-weight: 600;
         color: var(--blue);
@@ -337,7 +337,7 @@
 
       .toc-card b {
         display: block;
-        font-family: "Source Serif 4", Georgia, serif;
+        font-family: Ubuntu, sans-serif;
         font-size: 1.15rem;
         margin-bottom: 4px;
       }
@@ -442,7 +442,7 @@
 
       .card strong {
         display: block;
-        font-family: "Source Serif 4", Georgia, serif;
+        font-family: Ubuntu, sans-serif;
         margin-bottom: 4px;
       }
 
@@ -452,7 +452,7 @@
       }
 
       code {
-        font-family: "IBM Plex Mono", monospace;
+        font-family: "Ubuntu Mono", monospace;
         font-size: 0.86em;
         background: #eaf2fb;
         color: #1a4d8c;
@@ -467,7 +467,7 @@
         border: 1px solid var(--line);
         padding: 14px 16px;
         border-radius: 12px;
-        font-family: "IBM Plex Mono", monospace;
+        font-family: "Ubuntu Mono", monospace;
         font-size: 0.86rem;
       }
 
@@ -518,51 +518,78 @@
         margin: 8px 0 16px;
       }
 
+      #screenshots > p {
+        max-width: none;
+        margin: 0 0 18px;
+      }
+
       .shots {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 36px 22px;
-        margin: 28px 0 8px;
-        align-items: start;
+        gap: 16px;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        align-items: stretch;
       }
 
       .shot {
+        display: flex;
+        flex-direction: column;
         margin: 0;
-        background: none;
-        border: 0;
+        padding: 10px 10px 12px;
+        min-width: 0;
+        width: 100%;
+        background: var(--soft);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        box-shadow: none;
       }
 
-      .phone {
-        background: #0f172a;
-        border-radius: 28px;
-        padding: 12px 9px 16px;
-        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+      .shot:last-child {
+        grid-column: auto;
+        max-width: none;
+        width: 100%;
+        justify-self: stretch;
       }
 
-      .phone-bar {
-        width: 68px;
-        height: 7px;
-        margin: 2px auto 10px;
+      .shot-n {
+        display: inline-flex;
+        align-self: flex-start;
+        align-items: center;
+        justify-content: center;
+        min-width: 32px;
+        height: 22px;
+        margin: 0 0 8px;
+        padding: 0 8px;
         border-radius: 999px;
-        background: #334155;
+        background: #dbeafe;
+        color: var(--blue);
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
       }
 
-      .shot .frame {
-        min-height: 320px;
-        display: grid;
-        place-items: center;
-        background: #f8fafc;
-        border-radius: 18px;
+      .shot a {
+        display: block;
+        width: 100%;
+        max-width: none;
+        line-height: 0;
         overflow: hidden;
+        border-radius: 10px;
+        background: #fff;
       }
 
       .shot img {
         display: block;
         width: 100%;
-        height: 420px;
+        height: auto;
+        aspect-ratio: 9 / 16;
         object-fit: cover;
-        object-position: top;
-        background: #f8fafc;
+        object-position: top center;
+        background: #fff;
+        border: 0;
+        border-radius: 10px;
       }
 
       .shot.missing img {
@@ -575,10 +602,13 @@
         align-items: center;
         justify-content: center;
         gap: 6px;
-        min-height: 320px;
+        width: 100%;
+        aspect-ratio: 9 / 16;
         color: var(--muted);
         text-align: center;
-        padding: 20px;
+        padding: 16px;
+        background: #fff;
+        border-radius: 10px;
       }
 
       .shot.missing .drop {
@@ -586,26 +616,30 @@
       }
 
       .drop b {
-        font-family: "IBM Plex Mono", monospace;
+        font-family: "Ubuntu Mono", monospace;
         color: var(--blue);
         font-size: 0.78rem;
       }
 
-      figcaption {
-        padding: 16px 4px 0;
+      .shot figcaption {
+        width: 100%;
+        max-width: none;
+        padding: 10px 2px 0;
+        text-align: left;
       }
 
-      figcaption strong {
+      .shot figcaption strong {
         display: block;
-        font-size: 1.05rem;
-        margin-bottom: 4px;
-        font-family: Outfit, sans-serif;
+        font-size: 0.95rem;
+        margin-bottom: 2px;
+        font-family: Ubuntu, sans-serif;
       }
 
-      figcaption span {
+      .shot figcaption span {
         display: block;
         color: var(--muted);
-        font-size: 0.92rem;
+        font-size: 0.8rem;
+        line-height: 1.4;
       }
 
       .site-end {
@@ -619,6 +653,7 @@
       @media (max-width: 1100px) {
         .shots {
           grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 14px;
         }
       }
 
@@ -747,15 +782,13 @@
         }
 
         .shots {
-          grid-template-columns: minmax(0, 280px);
-          justify-content: center;
-          gap: 28px 16px;
+          grid-template-columns: 1fr;
+          padding: 0;
+          gap: 14px;
         }
 
-        .shot img,
-        .drop {
-          min-height: 0;
-          height: 380px;
+        .shot img {
+          height: auto;
         }
 
         table {
@@ -1025,15 +1058,11 @@
 
         .shots {
           grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 16px 12px;
-        }
-
-        .phone {
-          padding: 8px 6px 10px;
+          gap: 0;
         }
 
         .shot img {
-          height: 260px;
+          height: auto;
         }
 
         .shot.missing {
@@ -1051,7 +1080,7 @@
   </head>
   <body>
     <header class="doc-header">
-      <strong>DEPI · Assignment 13</strong>
+      <strong>DEPI · Week 7 · Lecture 13 & 14</strong>
       <span>Notes App documentation</span>
     </header>
     <div class="shell">
@@ -1059,10 +1088,12 @@
         <p class="side-kicker">Guide</p>
         <nav>
           <a href="#overview"><em>00</em> Overview</a>
-          <a href="#steps"><em>01</em> What I did</a>
-          <a href="#features"><em>02</em> Features</a>
-          <a href="#files"><em>03</em> File structure</a>
-          <a href="#screenshots"><em>04</em> Screenshots</a>
+          <a href="#lectures"><em>01</em> Lecture 13 &amp; 14</a>
+          <a href="#steps"><em>02</em> What I did</a>
+          <a href="#features"><em>03</em> Features</a>
+          <a href="#state"><em>04</em> Provider, emit, omit</a>
+          <a href="#files"><em>05</em> File structure</a>
+          <a href="#screenshots"><em>06</em> Screenshots</a>
         </nav>
         <a class="side-repo" href="https://github.com/devDoniaAlhosin/flutter-note-app.git">
           Open GitHub repository
@@ -1072,7 +1103,7 @@
       <article class="cover" id="overview">
         <div class="title-bar">
           <div class="intro">
-            <p class="kicker">Assignment 13 documentation</p>
+            <p class="kicker">Week 7 · Lecture 13 &amp; 14 applied</p>
             <h1>Notes App</h1>
           </div>
           <a class="logo" href="https://depi.gov.eg" target="_blank" rel="noreferrer">
@@ -1080,15 +1111,16 @@
           </a>
         </div>
         <p class="lede">
-          This page covers what I built in the Notes app, the features, and
-          the role of each project file.
+          I applied the content of Week 7 Lecture 13 and Lecture 14 in this
+          Notes app: the note screens from lecture 13, then Provider with
+          emit and omit from lecture 14.
         </p>
         <div class="facts">
           <div class="fact"><b>Program</b> DEPI · Flutter track</div>
-          <div class="fact"><b>Assignment</b> Week 7 · Assignment 13</div>
+          <div class="fact"><b>Week</b> Week 7</div>
+          <div class="fact"><b>Lecture 13</b> Notes app screens &amp; storage</div>
+          <div class="fact"><b>Lecture 14</b> Provider · emit · omit</div>
           <div class="fact"><b>App name</b> Notes</div>
-          <div class="fact"><b>State</b> Provider</div>
-          <div class="fact"><b>Storage</b> SharedPreferences</div>
           <div class="fact"><b>Student repo</b> flutter-note-app</div>
         </div>
         <a class="repo-banner" href="https://github.com/devDoniaAlhosin/flutter-note-app.git">
@@ -1100,16 +1132,67 @@
       <section id="toc" class="toc print-only">
         <h2>Table of contents</h2>
         <ol class="report-toc">
-          <li><a href="#steps">1. What I did</a></li>
-          <li><a href="#features">2. Features</a></li>
-          <li><a href="#files">3. File structure</a></li>
-          <li><a href="#screenshots">4. Screenshots</a></li>
+          <li><a href="#lectures">1. Lecture 13 and 14</a></li>
+          <li><a href="#steps">2. What I did</a></li>
+          <li><a href="#features">3. Features</a></li>
+          <li><a href="#state">4. Provider, emit, and omit</a></li>
+          <li><a href="#files">5. File structure</a></li>
+          <li><a href="#screenshots">6. Screenshots</a></li>
         </ol>
+      </section>
+
+      <section id="lectures">
+        <a class="back-toc" href="#toc">Back to contents</a>
+        <h2><span class="num">1</span>Lecture 13 and Lecture 14</h2>
+        <p>
+          This project applies the Week 7 lecture content. Lecture 13 is the
+          Notes app. Lecture 14 is Provider with emit and omit.
+        </p>
+        <div class="grid">
+          <div class="card green">
+            <strong>Lecture 13 — Notes app</strong>
+            <p>
+              I built the home list and the editor. Each note has a title and
+              a description. I can add, edit, search, swipe-delete, and save
+              notes on the device with <code>shared_preferences</code>.
+            </p>
+          </div>
+          <div class="card gold">
+            <strong>Lecture 14 — Provider, emit, omit</strong>
+            <p>
+              I moved notes into <code>NotesProvider</code>. After a change I
+              <strong>emit</strong> with <code>notifyListeners()</code>. I
+              <strong>omit</strong> empty notes, unmatched search, and unsaved
+              back.
+            </p>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Lecture</th>
+              <th>Content I applied</th>
+              <th>Where in the app</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Lecture 13</td>
+              <td>Note screens, title and description, CRUD, search, local save</td>
+              <td><code>notes_home_page.dart</code>, <code>note_editor_page.dart</code>, <code>note_repository.dart</code></td>
+            </tr>
+            <tr>
+              <td>Lecture 14</td>
+              <td>Provider, emit new state, omit what should not save or show</td>
+              <td><code>notes_provider.dart</code>, <code>main.dart</code>, note screens</td>
+            </tr>
+          </tbody>
+        </table>
       </section>
 
       <section id="steps">
         <a class="back-toc" href="#toc">Back to contents</a>
-        <h2><span class="num">1</span>What I did</h2>
+        <h2><span class="num">2</span>What I did</h2>
         <ol class="steps">
           <li>
             <strong>I turned the Flutter starter into a Notes app</strong>
@@ -1124,6 +1207,11 @@
             (<code>NotesProvider</code>) so the list and the editor share one notes state.
           </li>
           <li>
+            <strong>I applied emit and omit</strong>
+            on the note screens. Save, delete, and search emit a new state.
+            Empty notes, unmatched search, and back without the check are omitted.
+          </li>
+          <li>
             <strong>I saved notes on the device</strong>
             with <code>shared_preferences</code> as JSON.
           </li>
@@ -1136,7 +1224,7 @@
 
       <section id="features">
         <a class="back-toc" href="#toc">Back to contents</a>
-        <h2><span class="num">2</span>Features</h2>
+        <h2><span class="num">3</span>Features</h2>
         <div class="grid">
           <div class="card"><strong>Add note</strong><p>Tap + and fill Title and Description.</p></div>
           <div class="card green"><strong>Edit note</strong><p>Tap a card to change the text.</p></div>
@@ -1146,12 +1234,84 @@
           <div class="card gold"><strong>Save with check</strong><p>Press the check button to save. Back asks “Are you sure?”</p></div>
           <div class="card"><strong>Empty states</strong><p>Clear messages when the list or search is empty.</p></div>
           <div class="card green"><strong>Light / dark theme</strong><p>Follows the phone system setting.</p></div>
+          <div class="card gold"><strong>Provider</strong><p>One <code>NotesProvider</code> for the list and the editor.</p></div>
+          <div class="card"><strong>Emit &amp; omit</strong><p>Emit after a change. Omit empty, unmatched, or unsaved notes.</p></div>
         </div>
+      </section>
+
+      <section id="state">
+        <a class="back-toc" href="#toc">Back to contents</a>
+        <h2><span class="num">4</span>Provider, emit, and omit</h2>
+        <p>
+          Lecture 14 uses Provider for shared state. In Bloc you call
+          <code>emit</code>. In this app I emit with
+          <code>notifyListeners()</code>. Omit means I skip what should not
+          be saved or shown.
+        </p>
+        <div class="flow">
+          <span>1. Note screen action</span>
+          <span>2. NotesProvider</span>
+          <span>3. Emit or omit</span>
+          <span>4. Home list updates</span>
+        </div>
+        <div class="grid">
+          <div class="card green">
+            <strong>Emit</strong>
+            <p>
+              After save, delete, undo, or a new search, Provider calls
+              <code>notifyListeners()</code>. The home screen uses
+              <code>watch</code>, so the list rebuilds with the new notes.
+            </p>
+          </div>
+          <div class="card gold">
+            <strong>Omit</strong>
+            <p>
+              I omit an empty note (no title and no description). I omit
+              notes that do not match search. I omit a refresh if the search
+              text did not change. I omit save if I go back without the check.
+            </p>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>On the note screen</th>
+              <th>What happens</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Press the check</td>
+              <td><strong>Emit</strong> the new or updated note to the list.</td>
+            </tr>
+            <tr>
+              <td>Swipe delete or undo</td>
+              <td><strong>Emit</strong> the list without that note, or put it back.</td>
+            </tr>
+            <tr>
+              <td>Type in search</td>
+              <td><strong>Emit</strong> the query. <strong>Omit</strong> notes that do not match.</td>
+            </tr>
+            <tr>
+              <td>Empty title and description</td>
+              <td><strong>Omit</strong> the save. Show a snackbar instead.</td>
+            </tr>
+            <tr>
+              <td>Back without the check</td>
+              <td><strong>Omit</strong> the draft. Ask “Are you sure?”</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          I do not call <code>emit()</code> in the widget. The editor calls
+          <code>saveNote</code> or <code>deleteNote</code>. Provider emits.
+          The home screen updates.
+        </p>
       </section>
 
       <section id="files">
         <a class="back-toc" href="#toc">Back to contents</a>
-        <h2><span class="num">3</span>File structure</h2>
+        <h2><span class="num">5</span>File structure</h2>
         <p>Each file has one job. Screens talk to Provider. Provider talks to the repository.</p>
         <table>
           <thead>
@@ -1175,15 +1335,15 @@
             </tr>
             <tr>
               <td><code>lib/providers/notes_provider.dart</code></td>
-              <td>Shared state: add, update, delete, restore, and search. Calls <code>notifyListeners()</code> after a change.</td>
+              <td>Lecture 14 shared state. Add, update, delete, restore, and search. <strong>Emit</strong> with <code>notifyListeners()</code>. <strong>Omit</strong> empty notes, unmatched search, and no-change search.</td>
             </tr>
             <tr>
               <td><code>lib/screens/notes_home_page.dart</code></td>
-              <td>Home screen: note cards, search box, + button, and swipe to delete.</td>
+              <td>Home screen: watches Provider, shows emitted notes, omits notes that do not match search.</td>
             </tr>
             <tr>
               <td><code>lib/screens/note_editor_page.dart</code></td>
-              <td>Editor screen: Title and Description fields. Check button saves. Back shows “Are you sure?”</td>
+              <td>Editor screen: check emits a save. Empty note is omitted. Back omits unsaved text and asks “Are you sure?”</td>
             </tr>
             <tr>
               <td><code>android/.../strings.xml</code></td>
@@ -1191,7 +1351,7 @@
             </tr>
             <tr>
               <td><code>docs/assign_13-documantation_note_app.html</code></td>
-              <td>This HTML documentation page.</td>
+              <td>This HTML documentation page for Week 7 Lecture 13 and Lecture 14.</td>
             </tr>
           </tbody>
         </table>
@@ -1199,69 +1359,63 @@
 
       <section id="screenshots">
         <a class="back-toc" href="#toc">Back to contents</a>
-        <h2><span class="num">4</span>Screenshots</h2>
-        <p>App screens shown in phone frames. Four on the first row, search on the next row.</p>
+        <h2><span class="num">6</span>Screenshots</h2>
+        <p>
+          These are the app screens I captured. The gallery uses the same
+          width as this text and starts on the same left edge. Images load
+          from GitHub and fill each cell of the grid.
+        </p>
         <div class="shots">
           <figure class="shot missing">
-            <div class="phone">
-              <div class="phone-bar"></div>
-              <div class="frame">
-                <img src="screenshots/01-home-empty.png" alt="Empty home screen" />
-                <div class="drop">Waiting for screenshot<b>01-home-empty.png</b></div>
-              </div>
-            </div>
+            <span class="shot-n">01</span>
+            <a href="https://github.com/devDoniaAlhosin/flutter-note-app/blob/1d8478111e7fa366e1e009921f2e6a26a2dcf72d/docs/screenshots/01-home-empty.png">
+              <img src="https://github.com/devDoniaAlhosin/flutter-note-app/blob/1d8478111e7fa366e1e009921f2e6a26a2dcf72d/docs/screenshots/01-home-empty.png?raw=true" alt="Empty home screen" />
+            </a>
+            <div class="drop">Waiting for screenshot<b>01-home-empty.png</b></div>
             <figcaption>
               <strong>Empty home</strong>
               <span>No notes. Search and + button.</span>
             </figcaption>
           </figure>
           <figure class="shot missing">
-            <div class="phone">
-              <div class="phone-bar"></div>
-              <div class="frame">
-                <img src="screenshots/02-add-note.png" alt="Add note form" />
-                <div class="drop">Waiting for screenshot<b>02-add-note.png</b></div>
-              </div>
-            </div>
+            <span class="shot-n">02</span>
+            <a href="https://github.com/devDoniaAlhosin/flutter-note-app/blob/1d8478111e7fa366e1e009921f2e6a26a2dcf72d/docs/screenshots/02-add-note.png">
+              <img src="https://github.com/devDoniaAlhosin/flutter-note-app/blob/1d8478111e7fa366e1e009921f2e6a26a2dcf72d/docs/screenshots/02-add-note.png?raw=true" alt="Add note form" />
+            </a>
+            <div class="drop">Waiting for screenshot<b>02-add-note.png</b></div>
             <figcaption>
               <strong>Add note</strong>
               <span>Title and Description fields.</span>
             </figcaption>
           </figure>
           <figure class="shot missing">
-            <div class="phone">
-              <div class="phone-bar"></div>
-              <div class="frame">
-                <img src="screenshots/03-note-list.png" alt="Notes list" />
-                <div class="drop">Waiting for screenshot<b>03-note-list.png</b></div>
-              </div>
-            </div>
+            <span class="shot-n">03</span>
+            <a href="https://github.com/devDoniaAlhosin/flutter-note-app/blob/1d8478111e7fa366e1e009921f2e6a26a2dcf72d/docs/screenshots/03-note-list.png">
+              <img src="https://github.com/devDoniaAlhosin/flutter-note-app/blob/1d8478111e7fa366e1e009921f2e6a26a2dcf72d/docs/screenshots/03-note-list.png?raw=true" alt="Notes list" />
+            </a>
+            <div class="drop">Waiting for screenshot<b>03-note-list.png</b></div>
             <figcaption>
               <strong>Notes list</strong>
               <span>Saved notes with preview and time.</span>
             </figcaption>
           </figure>
           <figure class="shot missing">
-            <div class="phone">
-              <div class="phone-bar"></div>
-              <div class="frame">
-                <img src="screenshots/04-edit-note.png" alt="Edit note screen" />
-                <div class="drop">Waiting for screenshot<b>04-edit-note.png</b></div>
-              </div>
-            </div>
+            <span class="shot-n">04</span>
+            <a href="https://github.com/devDoniaAlhosin/flutter-note-app/blob/1d8478111e7fa366e1e009921f2e6a26a2dcf72d/docs/screenshots/04-edit-note.png">
+              <img src="https://github.com/devDoniaAlhosin/flutter-note-app/blob/1d8478111e7fa366e1e009921f2e6a26a2dcf72d/docs/screenshots/04-edit-note.png?raw=true" alt="Edit note screen" />
+            </a>
+            <div class="drop">Waiting for screenshot<b>04-edit-note.png</b></div>
             <figcaption>
               <strong>Edit note</strong>
               <span>Change text, then save or delete.</span>
             </figcaption>
           </figure>
           <figure class="shot missing">
-            <div class="phone">
-              <div class="phone-bar"></div>
-              <div class="frame">
-                <img src="screenshots/05-search.png" alt="Search notes" />
-                <div class="drop">Waiting for screenshot<b>05-search.png</b></div>
-              </div>
-            </div>
+            <span class="shot-n">05</span>
+            <a href="https://github.com/devDoniaAlhosin/flutter-note-app/blob/1d8478111e7fa366e1e009921f2e6a26a2dcf72d/docs/screenshots/05-search.png">
+              <img src="https://github.com/devDoniaAlhosin/flutter-note-app/blob/1d8478111e7fa366e1e009921f2e6a26a2dcf72d/docs/screenshots/05-search.png?raw=true" alt="Search notes" />
+            </a>
+            <div class="drop">Waiting for screenshot<b>05-search.png</b></div>
             <figcaption>
               <strong>Search</strong>
               <span>Filter notes by typed words.</span>
@@ -1274,7 +1428,7 @@
     </div>
     <footer class="doc-footer">
       <span>github.com/devDoniaAlhosin/flutter-note-app</span>
-      <strong>Week 7 · Flutter · Notes</strong>
+      <strong>Week 7 · Lecture 13 &amp; 14 · Notes</strong>
     </footer>
     <script>
       document.querySelectorAll(".shot").forEach((shot) => {
@@ -1287,7 +1441,7 @@
       });
 
       const links = [...document.querySelectorAll(".sidebar nav a")];
-      const sections = [...document.querySelectorAll("#overview, #steps, #features, #files, #screenshots")];
+      const sections = [...document.querySelectorAll("#overview, #lectures, #steps, #features, #state, #files, #screenshots")];
       const setActive = () => {
         const y = window.scrollY + 140;
         let current = sections[0];
